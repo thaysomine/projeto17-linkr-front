@@ -1,15 +1,16 @@
 import { AuthSection, Banner, Main, AuthForm, FormLabel, FormInput, RoundedButton, UnderlineLink, LargeTitle, Title } from "../Signup/styles";
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { ThreeDots } from "react-loader-spinner";
 import { useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
-
+import UserContext from "../../contexts/UserContext";
 
 
 function Signin() {
     const url = 'http://localhost:5000/signin'
     const [signinData, setSigninData] = useState({ email: '', password: '' })
     const [loading, setLoading] = useState(false)
+    const { setToken } = useContext(UserContext)
     const redirectUser = useNavigate()
 
     function signin(event) {
@@ -21,7 +22,10 @@ function Signin() {
                 password: signinData.password
             }
         )
-        promise.then(()=>{
+        promise.then((response)=>{
+            const token = response.data
+            setToken(token)
+            localStorage.setItem('linkr-user-token', token)
             setLoading(false) 
             redirectUser("/timeline") 
         })
