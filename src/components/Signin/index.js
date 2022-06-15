@@ -4,7 +4,7 @@ import { ThreeDots } from "react-loader-spinner";
 import { useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
 import UserContext from "../../contexts/UserContext";
-import Navbar from "../Navbar";
+
 
 function Signin() {
     const url = 'https://driven-linkr.herokuapp.com/signin'
@@ -37,15 +37,10 @@ function Signin() {
 
     return (
         <Main>
-            {
-                /*
-                <Banner>
+            <Banner>
                 <LargeTitle>linkr</LargeTitle>
                 <Title>save, share an discover the bests links on the web</Title>
             </Banner>
-                */
-            }
-            <Navbar/>
             <AuthSection>
                 <AuthForm onSubmit={signin}>
 

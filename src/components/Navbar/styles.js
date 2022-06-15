@@ -53,13 +53,13 @@ border-radius: 50px;
 const DropDownContent = styled.div`
  margin-top: 40px;
  background-color: black;
- width: 60px;
- height: 25px;
+ width: 150px;
+ height: 47px;
  color: white;
  position: fixed;
  top: 40px;
  right: 0;
- font-size: small;
+ font-size: medium;
  display: flex;
  align-items: center;
  justify-content: center;
