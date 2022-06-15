@@ -39,17 +39,29 @@ padding: 6px;
 font-size: 17px;
 `
 const ProfPic = styled.div`
-width: 45px;
 height: 45px;
-background: white;
 border: 1px gray;
 border-radius: 50px;
+display: flex;
+align-items: center;
+justify-content: center;
+
+
+ion-icon{
+    color: white;
+    font-size: larger;
+    margin-right: 25px;
+    cursor: pointer;
+    
+}
 `
 const Image = styled.img`
 width: 45px;
 height: 45px;
 border-radius: 50px;
+background: white;
 `
+
 const DropDownContent = styled.div`
  margin-top: 40px;
  background-color: black;
@@ -65,6 +77,12 @@ const DropDownContent = styled.div`
  justify-content: center;
  border-radius: 0 0 0 5px;
  cursor: pointer;
-`
+ z-index: -1;
 
-export {Header, SearchField, SearchInput, Logo, ProfPic, Image, DropDownContent}
+ transform: ${props => props.isShowing ? 'translate(0, 0)' : 'translate(0, -50px)'};
+ opacity:  ${props => props.isShowing ? '1' : '0'};
+ transition-duration: 0.5s;
+`
+const DropDownItem = styled.p``
+
+export {Header, SearchField, SearchInput, Logo, ProfPic, Image, DropDownContent, DropDownItem}
