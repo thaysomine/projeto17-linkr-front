@@ -3,6 +3,7 @@ import {useState, useContext} from "react";
 import React from 'react';
 import Signup from './Signup';
 import Signin from "./Signin";
+import Timeline from "./Timeline";
 import UserContext from "../contexts/UserContext";
 
 export default function App(){
@@ -11,8 +12,9 @@ export default function App(){
         <UserContext.Provider value={{ token, setToken }}>
         <BrowserRouter>
         <Routes>
-             <Route path="/" element={<Signin/>} />    
+            <Route path="/" element={<Signin/>} />    
             <Route path="/signup" element={<Signup/>} />
+            <Route path="/timeline" element={<Timeline/>} />
         </Routes>
     </BrowserRouter>
     </UserContext.Provider>
