@@ -7,7 +7,7 @@ import axios from "axios"
 
 function Post(props) {
 
-    const { userName, postContent, link, likesCount, imageUrl } = props
+    const { userName, postContent, link, likesCount, imageUrl } = props;
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(0)
     const [editing, SetEditing] = useState(false)
@@ -93,7 +93,6 @@ function Post(props) {
                     <Image />
                 </ProfPic>
                 <Likes isLiked={isLiked}>
-                    
                     <ion-icon name={`heart${isLiked ? '' : '-outline'}`}
                         onClick={() => handleLike(isLiked)} />
                     {likedByUser()}
@@ -102,19 +101,25 @@ function Post(props) {
                 </Likes>
             </VerticalStack>
 
-
             <VerticalStack width={100}>
                 <HorizontalStack alignment="space-between">
-                    Username
+                    {userName}
                     <ChangeArea>
-                        <ion-icon name="create-outline" onClick={() => performEdit()} />
-                        <ion-icon name="trash-bin-outline" onClick={() => performDelete()} />
+                        <ion-icon
+                            name="create-outline"
+                            onClick={() => performEdit()}
+                        />
+                        <ion-icon
+                            name="trash-bin-outline"
+                            onClick={() => performDelete()}
+                        />
                     </ChangeArea>
                 </HorizontalStack>
 
                 <HorizontalStack>
                     <PostForm>
-                        <Content type="text"
+                        <Content
+                            type="text"
                             placeholder="User text here"
                             name="post"
                             editing={editing}
@@ -132,9 +137,8 @@ function Post(props) {
                     />
                 </HorizontalStack>
             </VerticalStack>
-
         </Body>
-    )
+    );
 }
 
-export default Post
+export default Post;
