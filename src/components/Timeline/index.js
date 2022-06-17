@@ -1,10 +1,16 @@
-import { Main } from "./styles"
-import Navbar  from "../Navbar"
+import { Main, Posts } from "./styles"
+import Navbar from "../Navbar"
+import Post from "../Post"
 
-function Timeline(){
+function Timeline() {
     return (
         <Main>
-            <Navbar></Navbar>
+            <Navbar />
+            <Posts>
+                <Post />
+                <Post />
+                <Post />
+            </Posts>
         </Main>
     )
 }
