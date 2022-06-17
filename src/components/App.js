@@ -8,7 +8,9 @@ import HashtagPage from "./HashtagPage";
 import UserContext from "../contexts/UserContext";
 
 export default function App() {
-    const [token, setToken] = useState(localStorage.getItem("likr-user-token"));
+    const [token, setToken] = useState(
+        localStorage.getItem("linkr-user-token")
+    );
     return (
         <UserContext.Provider value={{ token, setToken }}>
             <BrowserRouter>

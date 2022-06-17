@@ -2,17 +2,24 @@ import { ContainerHashtag, Feed, MainContent, Title } from "./style";
 import Navbar from "../Navbar";
 import { useParams } from "react-router-dom";
 import api from "../../api";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Post from "../Post";
 import Trending from "../Trending";
+import UserContext from "../../contexts/UserContext";
 
 const HashtagPage = () => {
     const { hashtag: hashtagName } = useParams();
     const [posts, setPosts] = useState();
+    const { token } = useContext(UserContext);
+    console.log(token);
     const hashtags = ["node", "javascript", "python", "linux"];
 
     useEffect(() => {
-        const config = {};
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        };
         const request = api.get(`hashtag/${hashtagName}`, config);
         request.then((response) => {
             console.log(response.data);
@@ -33,13 +40,6 @@ const HashtagPage = () => {
                 <Title># {hashtagName}</Title>
                 <MainContent>
                     <Feed>
-                        <Post
-                            userName="sçal"
-                            imageUrl="kdsa"
-                            likesCount="dsalk"
-                            link="sldak"
-                            postContent="dczflskç"
-                        />
                         {posts?.map((post) => {
                             return (
                                 <Post
