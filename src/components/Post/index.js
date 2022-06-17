@@ -1,4 +1,4 @@
-import { Body, VerticalStack, HorizontalStack, Likes, ChangeArea, PostForm, Content, ConfirmBox, ConfirmCard, CheckAnswer, GoBackButton, ConfirmButton } from "./styles"
+import { Body, VerticalStack, HorizontalStack, Likes, ChangeArea, PostForm, Content, ConfirmBox, ConfirmCard, CheckAnswer, GoBackButton, ConfirmButton , Input} from "./styles"
 import { ProfPic, Image } from "../Navbar/styles"
 import { useState, useEffect , useRef } from "react"
 import { useNavigate } from 'react-router';
@@ -15,9 +15,10 @@ function Post(props) {
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(0)
     const [editing, SetEditing] = useState(false)
+    const [newContent, SetNewContent] = useState(postContent);
     const [ListLikes, SetListLikes] = useState([])
     const [confirmDelete, SetConfirmDelete] = useState(false)
-    const inputElement = useRef();
+    const inputRef = useRef();
     const token = localStorage.getItem('linkr-user-token')
     const navigate = useNavigate();
 
@@ -30,7 +31,7 @@ function Post(props) {
           ,{
             headers: {
                 // Authorization: `Bearer ${token}`
-                Authorization: `Bearer 123`
+                Authorization: `Bearer 222`
             },
           }
         )
@@ -57,7 +58,7 @@ function Post(props) {
             const promise = axios.get(`http://localhost:4000/liked/${postId}`,{
                 headers: {
                     // Authorization: `Bearer ${token}`
-                    Authorization: `Bearer 123`
+                    Authorization: `Bearer 222`
                 }
             })
             
@@ -94,11 +95,12 @@ function Post(props) {
 
     function Lista(postId){
         useEffect(() => {
+        // const promise = axios.get(`http://heroku-linkr-api.herokuapp.com/names/${postId}`)
         const promise = axios.get(`http://localhost:4000/names/${postId}`
         ,{
             headers: {
                 // Authorization: `Bearer ${token}`
-                Authorization: `Bearer 123`
+                Authorization: `Bearer 222`
             }
         })
         promise.then((response) => {
@@ -114,19 +116,30 @@ function Post(props) {
     }
     
 
-    function performEdit(postId) {
-        SetEditing(true)
-        inputElement.current.focus()
+    function performEdit() {
+            if (editing === false) {
+                SetEditing(true);
+            }
+            else {
+                SetEditing(false)
+                SetNewContent(postContent)
+            }
     }
+    
+    function handleEditionValue(e) {
+        SetNewContent(e.target.value)
+    }
+    
 
 
 
     function performDelete(postId) {
+        // const promise = axios.delete(`http://heroku-linkr-api.herokuapp.com/posts/${postId}`)
         const promise = axios.delete(`http://localhost:4000/posts/${postId}`
         ,{
             headers: {
                 // Authorization: `Bearer ${token}`
-                Authorization: `Bearer 123`
+                Authorization: `Bearer 222`
             }
         })
         promise.then((response) => {
@@ -145,7 +158,13 @@ function Post(props) {
         )
     }
 
-    
+    function showLikes(postId){
+        {Lista(idPost)}
+        {likedByUser(idPost)}
+        {LikeCount(idPost)} 
+    }
+
+    const idPost = 4
 
     return (
         <>
@@ -168,7 +187,7 @@ function Post(props) {
                                         <GoBackButton onClick={() => { SetConfirmDelete(false) }}> Não</GoBackButton>
                                         <ConfirmButton onClick={() => {
                                             setIsLoading(true)
-                                            performDelete(3)
+                                            performDelete(idPost)
                                         }}>
                                             Sim
                                         </ConfirmButton>
@@ -192,18 +211,12 @@ function Post(props) {
                 </ProfPic>
                 <Likes isLiked={isLiked}>                                  
                     <ion-icon data-tip={ListLikes} name={`heart${isLiked ? '' : '-outline'}`}
-                        onClick={() => handleLike(isLiked,3)}
+                        onClick={() => handleLike(isLiked,idPost)}
                         />
-<<<<<<< HEAD
-                    {Lista(3)}
-                    {likedByUser(3)}
-                    {LikeCount(3)}
-=======
-                    {Lista(1)}
-                    {likedByUser(1)}
-                    {LikeCount(1)}
-
->>>>>>> 82d8fdddfedac0af41e654d537a6c804f597193f
+                    {showLikes(idPost)}
+                    {/* {Lista(idPost)}
+                    {likedByUser(idPost)}
+                    {LikeCount(idPost)} */}
                     {`${likes} likes`}
                     <ReactTooltip type="info" effect="solid"/>
                 </Likes>
@@ -211,24 +224,44 @@ function Post(props) {
 
             <VerticalStack width={100}>
                 <HorizontalStack alignment="space-between">
-                    {userName}
+                    {/* {userName} */}
+                    {editing?
+                        <>
+                            <Input
+                                ref={inputRef}
+                                type="text"
+                                value={newContent}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        performEdit()
+                                    }
+                                    if (e.key === 'Escape') {
+                                        SetEditing(false)
+                                        SetNewContent(postContent)
+                                }}}
+                                onChange={(e) => handleEditionValue(e)}
+                            ></Input>
+                        </>
+                    :
+                    <HorizontalStack>
+                    <PostForm>
+                        <Content
+                            type="text"
+                            placeholder="User text here"
+                            name="post"
+                            ref={inputRef}
+                            
+                        />
+                    </PostForm>
+                </HorizontalStack>
+                    }
                     <ChangeArea>
                         <ion-icon name="create-outline" onClick={() => performEdit()} />
                         <ion-icon name="trash-bin-outline" onClick={() => SetConfirmDelete(true)} />
                     </ChangeArea>
                 </HorizontalStack>
 
-                <HorizontalStack>
-                    <PostForm>
-                        <Content
-                            type="text"
-                            placeholder="User text here"
-                            name="post"
-                            ref={inputElement}
-                            
-                        />
-                    </PostForm>
-                </HorizontalStack>
+                
 
                 <HorizontalStack>
                     <ReactTinyLink
@@ -243,7 +276,7 @@ function Post(props) {
         </Body>
         </>
     )
-
 }
+
 
 export default Post;
