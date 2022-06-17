@@ -1,6 +1,7 @@
 import { Body, VerticalStack, HorizontalStack, Likes, ChangeArea, PostForm, Content, ConfirmBox, ConfirmCard, CheckAnswer, GoBackButton, ConfirmButton } from "./styles"
 import { ProfPic, Image } from "../Navbar/styles"
 import { useState, useEffect , useRef } from "react"
+import { useNavigate } from 'react-router';
 import { ReactTinyLink } from 'react-tiny-link'
 import ReactTooltip from 'react-tooltip';
 import { ThreeDots } from "react-loader-spinner";
@@ -17,6 +18,7 @@ function Post(props) {
     const [confirmDelete, SetConfirmDelete] = useState(false)
     const inputElement = useRef();
     const token = localStorage.getItem('linkr-user-token')
+    const navigate = useNavigate();
 
 
 
@@ -118,7 +120,29 @@ function Post(props) {
 
 
 
-    function performDelete() { }
+    function performDelete(postId) {
+        const promise = axios.delete(`http://localhost:4000/posts/${postId}`
+        ,{
+            headers: {
+                // Authorization: `Bearer ${token}`
+                Authorization: `Bearer 123`
+            }
+        })
+        promise.then((response) => {
+            console.log(response)
+            setIsLoading(false);
+            SetConfirmDelete(false);
+            navigate('/timeline')
+        }
+        )
+        promise.catch((err) => {
+            alert("Ops! Algo deu errado, tente novamente mais tarde")
+            setIsLoading(false);
+            SetConfirmDelete(false);
+            console.log(err)
+        }
+        )
+    }
 
     
 
@@ -143,7 +167,7 @@ function Post(props) {
                                         <GoBackButton onClick={() => { SetConfirmDelete(false) }}> Não</GoBackButton>
                                         <ConfirmButton onClick={() => {
                                             setIsLoading(true)
-                                            performDelete()
+                                            performDelete(3)
                                         }}>
                                             Sim
                                         </ConfirmButton>
@@ -169,11 +193,11 @@ function Post(props) {
                     
                     
                     <ion-icon data-tip={ListLikes} name={`heart${isLiked ? '' : '-outline'}`}
-                        onClick={() => handleLike(isLiked,1)}
+                        onClick={() => handleLike(isLiked,3)}
                         />
-                    {Lista(1)}
-                    {likedByUser(1)}
-                    {LikeCount(1)}
+                    {Lista(3)}
+                    {likedByUser(3)}
+                    {LikeCount(3)}
                     {`${likes} likes`}
                     <ReactTooltip type="info" effect="solid"/>
                 </Likes>
