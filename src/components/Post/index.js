@@ -8,6 +8,7 @@ import axios from "axios"
 
 function Post(props) {
 
+
     const { userName, postContent, link, likesCount, imageUrl } = props
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false)
@@ -165,24 +166,22 @@ function Post(props) {
                 <ProfPic>
                     <Image />
                 </ProfPic>
-                <Likes isLiked={isLiked}>
-                    
-                    
+                <Likes isLiked={isLiked}>                                  
                     <ion-icon data-tip={ListLikes} name={`heart${isLiked ? '' : '-outline'}`}
                         onClick={() => handleLike(isLiked,1)}
                         />
                     {Lista(1)}
                     {likedByUser(1)}
                     {LikeCount(1)}
+
                     {`${likes} likes`}
                     <ReactTooltip type="info" effect="solid"/>
                 </Likes>
             </VerticalStack>
 
-
             <VerticalStack width={100}>
                 <HorizontalStack alignment="space-between">
-                    Username
+                    {userName}
                     <ChangeArea>
                         <ion-icon name="create-outline" onClick={() => performEdit()} />
                         <ion-icon name="trash-bin-outline" onClick={() => SetConfirmDelete(true)} />
@@ -191,7 +190,8 @@ function Post(props) {
 
                 <HorizontalStack>
                     <PostForm>
-                        <Content type="text"
+                        <Content
+                            type="text"
                             placeholder="User text here"
                             name="post"
                             ref={inputElement}
@@ -213,6 +213,7 @@ function Post(props) {
         </Body>
         </>
     )
+
 }
 
-export default Post
+export default Post;

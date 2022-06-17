@@ -3,9 +3,9 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
-  
-  .root {
-      background-color: rgb(39, 39, 39);
-      font-family: 'Oswald', sans-serif;
-  }
+}
+
+.root {
+    background-color: rgb(39, 39, 39);
+    font-family: "Oswald", sans-serif;
+}
