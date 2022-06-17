@@ -1,10 +1,9 @@
-import { ContainerHashtag, Feed, MainContent, Title } from "./style";
+import { ContainerHashtag, Title } from "./style";
+import MainContent from "../MainContent";
 import Navbar from "../Navbar";
 import { useParams } from "react-router-dom";
 import api from "../../api";
 import { useContext, useEffect, useState } from "react";
-import Post from "../Post";
-import Trending from "../Trending";
 import UserContext from "../../contexts/UserContext";
 
 const HashtagPage = () => {
@@ -30,32 +29,16 @@ const HashtagPage = () => {
         });
     }, [hashtagName]);
 
-    console.log(hashtagName);
-    console.log(posts);
-
     return (
-        <ContainerHashtag>
+        <>
             <Navbar />
-            <div>
-                <Title># {hashtagName}</Title>
-                <MainContent>
-                    <Feed>
-                        {posts?.map((post) => {
-                            return (
-                                <Post
-                                    userName={post.username}
-                                    postContent={post.description}
-                                    link={post.link}
-                                    likesCount={0}
-                                    imageUrl={post.imageUrl}
-                                />
-                            );
-                        })}
-                    </Feed>
-                    <Trending hashtags={hashtags} />
-                </MainContent>
-            </div>
-        </ContainerHashtag>
+            <ContainerHashtag>
+                <div>
+                    <Title># {hashtagName}</Title>
+                    <MainContent posts={posts} hashtags={hashtags} />
+                </div>
+            </ContainerHashtag>
+        </>
     );
 };
 

@@ -19,19 +19,4 @@ const Title = styled.h1`
     padding-block: 20px;
 `;
 
-const MainContent = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    flex-direction: row;
-    gap: 20px;
-`;
-
-const Feed = styled.div`
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-`;
-
-export { ContainerHashtag, Title, MainContent, Feed };
+export { ContainerHashtag, Title };
