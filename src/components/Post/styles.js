@@ -1,9 +1,8 @@
 import styled from "styled-components";
 
 const Body = styled.article`
-margin-top: 110px;
+margin-top: 30px;
 width: 600px;
-height: 276px;
 background-color: #171717;
 border-radius: 15px;
 display: flex;
@@ -83,6 +82,7 @@ border: 1px solid gray;
 border-radius: 10px;
 //padding: 25px 0px 10px 25px;
 display: flex;
+cursor: pointer;
 `
 const SnippetImage = styled.img`
 width: 100%;
