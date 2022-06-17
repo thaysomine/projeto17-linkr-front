@@ -1,16 +1,14 @@
 import styled from "styled-components";
 
 const Body = styled.article`
-margin-top: 110px;
-width: 600px;
+width: 611px;
 height: 276px;
 background-color: #171717;
-border-radius: 15px;
+border-radius: 16px;
 display: flex;
 padding: 10px;
 color: white;
-
-
+margin-top: 30px;
 `
 const VerticalStack = styled.div`
 width: ${props => props.width}%;

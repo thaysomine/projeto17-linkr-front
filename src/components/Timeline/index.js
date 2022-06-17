@@ -1,14 +1,19 @@
-import { Main } from "./styles";
+import { Main, H1 } from "./styles";
 import Navbar from "../Navbar";
 import Post from "../Post";
+import CreatePost from "../createPost";
 
 function Timeline() {
     alert(localStorage.getItem("linkr-user-token"));
     return (
-        <Main>
-            <Navbar></Navbar>
-            <Post></Post>
-        </Main>
+        <>
+            <Navbar/>     
+            <Main>
+                <H1>Timeline</H1>
+                <CreatePost></CreatePost>
+                <Post></Post>
+            </Main>
+        </>
     );
 }
 
