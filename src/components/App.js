@@ -5,6 +5,7 @@ import Signup from "./Signup";
 import Signin from "./Signin";
 import Timeline from "./Timeline";
 import HashtagPage from "./HashtagPage";
+import Userpage from "./Userpage";
 import UserContext from "../contexts/UserContext";
 
 export default function App() {
@@ -19,6 +20,7 @@ export default function App() {
                     <Route path="/signup" element={<Signup />} />
                     <Route path="/timeline" element={<Timeline />} />
                     <Route path="/hashtag/:hashtag" element={<HashtagPage />} />
+                    <Route path="/user/:id" element={<Userpage />} />
                 </Routes>
             </BrowserRouter>
         </UserContext.Provider>
