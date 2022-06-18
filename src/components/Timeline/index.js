@@ -1,10 +1,12 @@
-import { Main, Posts, LargeTitle } from "./styles"
+
+import { Main, Posts, LargeTitle, H1 } from "./styles"
 import Navbar from "../Navbar"
 import Post from "../Post"
 import { useContext, useEffect, useState } from "react"
 import axios from "axios"
 import UserContext from "../../contexts/UserContext"
 import { LineWave } from "react-loader-spinner"
+import CreatePost from "../createPost";
 
 function Timeline() {
 
@@ -29,8 +31,10 @@ function Timeline() {
     useEffect(getPosts, [])
 
     return (
+      <>
+       <Navbar />
         <Main>
-            <Navbar />
+            <CreatePost />
             <Posts>
                 {
                     loading && <LineWave color="white"/>
@@ -54,7 +58,8 @@ function Timeline() {
 
             </Posts>
         </Main>
+      </>
     )
-}
 
-export default Timeline
+
+export default Timeline;

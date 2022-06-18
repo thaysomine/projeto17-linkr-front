@@ -20,24 +20,34 @@ font-family: 'Passion One', cursive;
 font-weight: 400;
 color: white;
 `
-const SearchField = styled.form`
-width: 300px;
-height: 30px;
-display: flex;
-justify-content: center;
+const SearchField = styled.div`
+background-color: white;
+width: 100%;
+height: auto;
+display:flex;
 align-items: center;
+justify-content: center;
+border-radius: 8px;
+position: relative;
+z-index: 2;
 
 @media(max-width: 700px){
     display: none;
 }
 `
 const SearchInput = styled.input`
-width: 90%;
-height: 90%;
+width: 100%;
+height: 30px;
 border: none;
-border-radius: 9px;
+border-radius: 8px;
 padding: 6px;
 font-size: 17px;
+z-index: 2;
+:focus {
+    box-shadow: 0 0 0 0;
+    border: 0 none;
+    outline: 0;
+}
 `
 const ProfPic = styled.div`
 height: 45px;
@@ -84,6 +94,46 @@ const DropDownContent = styled.div`
  opacity:  ${props => props.isShowing ? '1' : '0'};
  transition-duration: 0.5s;
 `
+
+const AutocompleteBox = styled.div`
+    background-color: #E7E7E7;
+    position: absolute;
+    top: 37px;
+    width: inherit;
+    max-height: 500px;
+    box-sizing: border-box;
+    padding: 13px 17px 7px 17px;
+    border-radius: 0px 0px 8px 8px;
+    overflow-y: scroll;
+    z-index: 2;
+    display: ${props => props.suggestionBox ? 'none' : ''};
+`;
+
+const Suggestion = styled.div`
+    background-color: #E7E7E7;
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+    p {
+        margin-left: 12px;
+        font-family: 'Lato';
+        font-weight: 400;
+        font-size: 20px;
+        line-height: 23px;
+        color: #515151;
+        overflow: hidden;
+    }
+`;
+
+const Wrapper = styled.div`
+    display: flex;
+    align-items: center;
+    width:300px;
+    box-sizing: border-box;
+    padding: 0px 10px;
+    height: auto;
+`;
+
 const DropDownItem = styled.p``
 
-export {Header, SearchField, SearchInput, Logo, ProfPic, Image, DropDownContent, DropDownItem}
+export {Header, SearchField, SearchInput, Logo, ProfPic, Image, DropDownContent, DropDownItem, AutocompleteBox, Suggestion, Wrapper}

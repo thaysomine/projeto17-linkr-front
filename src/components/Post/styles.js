@@ -4,12 +4,11 @@ const Body = styled.article`
 margin-top: 30px;
 width: 600px;
 background-color: #171717;
-border-radius: 15px;
+border-radius: 16px;
 display: flex;
 padding: 10px;
 color: white;
-
-
+margin-top: 30px;
 `
 const VerticalStack = styled.div`
 width: ${props => props.width}%;
@@ -108,4 +107,4 @@ color: lightgray;
 font-family: 'Lato', sans-serif;
 `
 
-export {Body, VerticalStack, HorizontalStack, Likes, ChangeArea, PostForm, Content, SnippetBody, SnippetImage, SnippetTitle, SnippetDescription, SnippetUrl}
+export {Body, VerticalStack, HorizontalStack, SnippetBody, SnippetImage, SnippetTitle,  SnippetDescription, SnippetUrl,  Likes, ChangeArea, PostForm, Content, ConfirmBox, ConfirmCard, CheckAnswer, GoBackButton, ConfirmButton}
