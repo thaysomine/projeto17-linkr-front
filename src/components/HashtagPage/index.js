@@ -5,13 +5,14 @@ import { useParams } from "react-router-dom";
 import api from "../../api";
 import { useContext, useEffect, useState } from "react";
 import UserContext from "../../contexts/UserContext";
+import { TrendingContext } from "../../contexts/TrendingContext";
 
 const HashtagPage = () => {
     const { hashtag: hashtagName } = useParams();
     const [posts, setPosts] = useState();
     const { token } = useContext(UserContext);
+    const { trending } = useContext(TrendingContext);
     console.log(token);
-    const hashtags = ["node", "javascript", "python", "linux"];
 
     useEffect(() => {
         const config = {
@@ -35,7 +36,7 @@ const HashtagPage = () => {
             <ContainerHashtag>
                 <div>
                     <Title># {hashtagName}</Title>
-                    <MainContent posts={posts} hashtags={hashtags} />
+                    <MainContent posts={posts} hashtags={trending} />
                 </div>
             </ContainerHashtag>
         </>

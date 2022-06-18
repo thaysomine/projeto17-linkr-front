@@ -2,15 +2,19 @@ import { Link } from "react-router-dom";
 import { ContainerTrending, List } from "./style";
 
 const Trending = ({ hashtags }) => {
+    console.log("___________________________________-");
+    console.log(hashtags);
     return (
         <ContainerTrending>
             <h1>Trending</h1>
             <hr />
             <List>
-                {hashtags.map((hashtag) => {
+                {hashtags?.map((hashtag) => {
                     return (
-                        <li>
-                            <Link to={`/hashtag/${hashtag}`}># {hashtag} </Link>
+                        <li key={hashtag.name}>
+                            <Link to={`/hashtag/${hashtag.name}`}>
+                                # {hashtag.name}{" "}
+                            </Link>
                         </li>
                     );
                 })}
