@@ -12,7 +12,6 @@ const HashtagPage = () => {
     const [posts, setPosts] = useState();
     const { token } = useContext(UserContext);
     const { trending } = useContext(TrendingContext);
-    console.log(token);
 
     useEffect(() => {
         const config = {
@@ -22,13 +21,12 @@ const HashtagPage = () => {
         };
         const request = api.get(`hashtag/${hashtagName}`, config);
         request.then((response) => {
-            console.log(response.data);
             setPosts(response.data);
         });
         request.catch((err) => {
             console.log(err);
         });
-    }, [hashtagName]);
+    }, [hashtagName, token]);
 
     return (
         <>

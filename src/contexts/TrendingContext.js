@@ -16,12 +16,9 @@ const TrendingProvider = ({ children }) => {
         };
         const request = api.get("/trending", config);
         request.then((response) => {
-            console.log("O que tá acontecendo?");
-            console.log(response.data);
             setTrending(response.data);
         });
         request.catch((err) => {
-            console.log("Alguma coisa deu errada!");
             console.log(err);
         });
     }, [token]);

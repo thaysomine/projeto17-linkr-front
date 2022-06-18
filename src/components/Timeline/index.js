@@ -4,10 +4,9 @@ import Post from "../Post";
 import CreatePost from "../createPost";
 
 function Timeline() {
-    alert(localStorage.getItem("linkr-user-token"));
     return (
         <>
-            <Navbar/>     
+            <Navbar />
             <Main>
                 <H1>Timeline</H1>
                 <CreatePost></CreatePost>

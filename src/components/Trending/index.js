@@ -2,8 +2,6 @@ import { Link } from "react-router-dom";
 import { ContainerTrending, List } from "./style";
 
 const Trending = ({ hashtags }) => {
-    console.log("___________________________________-");
-    console.log(hashtags);
     return (
         <ContainerTrending>
             <h1>Trending</h1>
