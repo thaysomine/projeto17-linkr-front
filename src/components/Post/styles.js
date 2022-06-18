@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const Body = styled.article`
-margin-top: 30px;
-width: 600px;
+width: 611px;
+height: 276px;
 background-color: #171717;
 border-radius: 16px;
 display: flex;
@@ -13,11 +13,12 @@ margin-top: 30px;
 const VerticalStack = styled.div`
 width: ${props => props.width}%;
 height: 100%;
-margin: ${props => props.margin}px;
+margin-right: 5px;
 display: flex;
 flex-direction: column;
 align-items: center;
 justify-content: flex-start;
+padding: 3px;
 `
 
 const HorizontalStack = styled.div`
@@ -25,8 +26,6 @@ width: 100%;
 display: flex;
 align-items: center;
 justify-content: ${props => props.alignment ? props.alignment : 'flex-start'};
-padding: ${props => props.padding};
-margin: ${props => props.margin}px;
 `
 
 const Likes = styled.div`
@@ -72,39 +71,130 @@ color:  ${props => props.editing ? 'black' : 'white'};
 pointer-events: ${props => props.editing ? 'all' : 'none'};
 background-color: ${props => props.editing ? 'white' : 'transparent'};
 `
-const SnippetBody = styled.article`
-margin-top: 5px;
-width: 100%;
-height: 150px;
-background-color: #171717;
-border: 1px solid gray;
-border-radius: 10px;
-//padding: 25px 0px 10px 25px;
-display: flex;
-cursor: pointer;
-`
-const SnippetImage = styled.img`
-width: 100%;
-height: 100%;
-border-radius: 0 10px 10px 0;
-`
-const SnippetTitle = styled.h1`
-font-size: larger;
-font-weight: 800;
-color: #CECECE;
-font-family: 'Lato', sans-serif;
-`
-const SnippetDescription = styled.p`
-font-size: small;
-line-break: auto;
-color: #CECECE;
-font-family: 'Lato', sans-serif;
-width: 95%;
-`
-const SnippetUrl = styled.h2`
-font-size: small;
-color: lightgray;
-font-family: 'Lato', sans-serif;
+
+const ConfirmBox = styled.div`
+    background-color: rgba(255, 255, 255, 0.6);
+    position: absolute;
+    z-index: 2;
+    min-width:100%;
+    min-height:100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: 50%;
+    justify-content: center;
 `
 
-export {Body, VerticalStack, HorizontalStack, SnippetBody, SnippetImage, SnippetTitle,  SnippetDescription, SnippetUrl,  Likes, ChangeArea, PostForm, Content, ConfirmBox, ConfirmCard, CheckAnswer, GoBackButton, ConfirmButton}
+const ConfirmCard = styled.div`
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 597px;
+    height: 262px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #333333;
+    border-radius: 50px;
+    z-index: 2;
+    p{
+        margin: 8px 0;
+        width: 370px;
+        font-family: var(--font-family);
+        font-weight: 700;
+        font-size: 34px;
+        line-height: 41px;
+        text-align: center;
+        color: #FFFFFF;
+    }
+    button{
+        width: 95px;
+        p{
+            color: #FFFFFF;
+        }
+    }
+    
+   @media(max-width: 750px){
+       width: 80%;
+       height: fit-content;
+       padding: 40px 20px;
+        border-radius: 20px;
+       p{
+           
+        width: fit-content ;
+        font-family: var(--font-family);
+        font-weight: 700;;
+        font-size: 18px;
+        line-height: 21px;
+        text-align: center;
+        color: #FFFFFF;
+    }
+   }
+   
+`
+
+const CheckAnswer = styled.div`
+    display: flex;
+    margin-top: 40px;
+    justify-content: space-evenly;
+`
+
+const GoBackButton = styled.button`
+    height: 37px;
+    min-width:134px;
+    color: #1877F2;
+    font-family: var(--font-family);
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 5px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: #FFFFFF;
+    :hover{
+        filter: brightness(95%);
+    }
+     @media(max-width: 400px){
+        font-size: 16px;
+        line-height: 20px;
+        min-width:fit-content;
+    }
+`
+
+const ConfirmButton = styled.button`
+    height: 37px;
+    min-width:134px;
+    background-color: #1877F2;
+    color: #FFFFFF;
+    font-family: var(--font-family);
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 5px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left:27px ;
+    cursor: pointer;
+    :hover{
+        filter: brightness(95%);
+    }
+    @media(max-width: 400px){
+        font-size: 16px;
+        line-height: 20px;
+        min-width:fit-content;
+    }
+     @media(max-width: 290px){
+        margin-left:10px ;
+    }
+`;
+
+export {Body, VerticalStack, HorizontalStack, Likes, ChangeArea, PostForm, Content, ConfirmBox, ConfirmCard, CheckAnswer, GoBackButton, ConfirmButton}
