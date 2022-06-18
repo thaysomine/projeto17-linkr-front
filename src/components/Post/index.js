@@ -1,7 +1,7 @@
 import { Body, VerticalStack, HorizontalStack, Likes, ChangeArea, PostForm, Content, ConfirmBox, ConfirmCard, CheckAnswer, GoBackButton, ConfirmButton } from "./styles"
 import { ProfPic, Image } from "../Navbar/styles"
+import LinkSnippet from "./LinkSnippet"
 import { useState, useEffect , useRef } from "react"
-import { ReactTinyLink } from 'react-tiny-link'
 import ReactTooltip from 'react-tooltip';
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios"
@@ -9,11 +9,12 @@ import axios from "axios"
 function Post(props) {
 
 
-    const { userName, postContent, link, likesCount, imageUrl } = props
+   const { username, description, link, likesCount, imageUrl, hashtag } = props
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false)
-    const [likes, setLikes] = useState(0)
+    //const [likes, setLikes] = useState(0)
     const [editing, SetEditing] = useState(false)
+    function performEdit() { SetEditing(!editing) }
     const [ListLikes, SetListLikes] = useState([])
     const [confirmDelete, SetConfirmDelete] = useState(false)
     const inputElement = useRef();
@@ -42,12 +43,12 @@ function Post(props) {
                 console.log("descurtiu")
             }
             
-            
+            setIsLiked(!like) 
         })
         promise.catch((err)=>{
             console.log(err)
         })
-        setIsLiked(!like) }
+        }
 
     function likedByUser(postId) {
         if (token) {
@@ -118,7 +119,6 @@ function Post(props) {
     }
 
 
-
     function performDelete() { }
 
     
@@ -161,10 +161,10 @@ function Post(props) {
         
 
         <Body>
-            
-            <VerticalStack>
+
+            <VerticalStack margin={8}>
                 <ProfPic>
-                    <Image />
+                    <Image src={imageUrl}/>
                 </ProfPic>
                 <Likes isLiked={isLiked}>                                  
                     <ion-icon data-tip={ListLikes} name={`heart${isLiked ? '' : '-outline'}`}
@@ -176,12 +176,14 @@ function Post(props) {
 
                     {`${likes} likes`}
                     <ReactTooltip type="info" effect="solid"/>
+
                 </Likes>
             </VerticalStack>
 
             <VerticalStack width={100}>
                 <HorizontalStack alignment="space-between">
-                    {userName}
+
+                    {username}
                     <ChangeArea>
                         <ion-icon name="create-outline" onClick={() => performEdit()} />
                         <ion-icon name="trash-bin-outline" onClick={() => SetConfirmDelete(true)} />
@@ -190,24 +192,17 @@ function Post(props) {
 
                 <HorizontalStack>
                     <PostForm>
-                        <Content
-                            type="text"
-                            placeholder="User text here"
+                        <Content type="text"
+                            placeholder={description}
+                            value = {description}
                             name="post"
                             ref={inputElement}
-                            
                         />
                     </PostForm>
                 </HorizontalStack>
 
                 <HorizontalStack>
-                    <ReactTinyLink
-                        cardSize="small"
-                        showGraphic={true}
-                        maxLine={2}
-                        minLine={1}
-                        url="https://www.amazon.com/Steve-Madden-Mens-Jagwar-10-5/dp/B016X44MKA/ref=lp_18637582011_1_1?srs=18637582011&ie=UTF8&qid=1550721409&sr=8-1"
-                    />
+                    <LinkSnippet url = {link}/>
                 </HorizontalStack>
             </VerticalStack>
         </Body>
