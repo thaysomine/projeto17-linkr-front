@@ -2,15 +2,15 @@ import { Body, VerticalStack, HorizontalStack, Likes, ChangeArea, PostForm, Cont
 import { ProfPic, Image } from "../Navbar/styles"
 import { useState, useEffect , useRef } from "react"
 import { useNavigate } from 'react-router';
-import { ReactTinyLink } from 'react-tiny-link'
 import ReactTooltip from 'react-tooltip';
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios"
+import LinkSnippet from "./LinkSnippet"
 
 function Post(props) {
 
 
-    const { userName, postContent, link, likesCount, imageUrl } = props
+    const { username, postContent, link, likesCount, imageUrl, hashtag } = props
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(0)
@@ -129,9 +129,6 @@ function Post(props) {
     function handleEditionValue(e) {
         SetNewContent(e.target.value)
     }
-    
-
-
 
     function performDelete(postId) {
         // const promise = axios.delete(`http://heroku-linkr-api.herokuapp.com/posts/${postId}`)
@@ -205,9 +202,9 @@ function Post(props) {
 
         <Body>
             
-            <VerticalStack>
+        <VerticalStack margin={8}>
                 <ProfPic>
-                    <Image />
+                <Image src={imageUrl}/>
                 </ProfPic>
                 <Likes isLiked={isLiked}>                                  
                     <ion-icon data-tip={ListLikes} name={`heart${isLiked ? '' : '-outline'}`}
@@ -222,10 +219,16 @@ function Post(props) {
                 </Likes>
             </VerticalStack>
 
-            <VerticalStack width={100}>
-                <HorizontalStack alignment="space-between">
-                    {/* {userName} */}
-                    {editing?
+            <VerticalStack width={100} >
+                
+                 <HorizontalStack alignment="space-between">
+                 {username}
+                    <ChangeArea>
+                        <ion-icon name="create-outline" onClick={() => performEdit()} />
+                        <ion-icon name="trash-bin-outline" onClick={() => SetConfirmDelete(true)} />
+                    </ChangeArea>
+                </HorizontalStack>
+                {editing?
                         <>
                             <Input
                                 ref={inputRef}
@@ -243,34 +246,22 @@ function Post(props) {
                             ></Input>
                         </>
                     :
-                    <HorizontalStack>
                     <PostForm>
                         <Content
                             type="text"
-                            placeholder="User text here"
+                            placeholder={postContent}
+                            value = {postContent}
                             name="post"
                             ref={inputRef}
                             
                         />
                     </PostForm>
-                </HorizontalStack>
-                    }
-                    <ChangeArea>
-                        <ion-icon name="create-outline" onClick={() => performEdit()} />
-                        <ion-icon name="trash-bin-outline" onClick={() => SetConfirmDelete(true)} />
-                    </ChangeArea>
-                </HorizontalStack>
 
+                    }
                 
 
                 <HorizontalStack>
-                    <ReactTinyLink
-                        cardSize="small"
-                        showGraphic={true}
-                        maxLine={2}
-                        minLine={1}
-                        url="https://www.amazon.com/Steve-Madden-Mens-Jagwar-10-5/dp/B016X44MKA/ref=lp_18637582011_1_1?srs=18637582011&ie=UTF8&qid=1550721409&sr=8-1"
-                    />
+                <LinkSnippet url = {link}/>
                 </HorizontalStack>
             </VerticalStack>
         </Body>
