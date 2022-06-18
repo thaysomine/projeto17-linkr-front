@@ -7,10 +7,12 @@ const Trending = ({ hashtags }) => {
             <h1>Trending</h1>
             <hr />
             <List>
-                {hashtags.map((hashtag) => {
+                {hashtags?.map((hashtag) => {
                     return (
-                        <li>
-                            <Link to={`/hashtag/${hashtag}`}># {hashtag} </Link>
+                        <li key={hashtag.name}>
+                            <Link to={`/hashtag/${hashtag.name}`}>
+                                # {hashtag.name}{" "}
+                            </Link>
                         </li>
                     );
                 })}
