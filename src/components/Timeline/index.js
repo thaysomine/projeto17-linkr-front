@@ -10,6 +10,8 @@ import { LineWave } from "react-loader-spinner"
 
 function Timeline() {
 
+    alert(localStorage.getItem("linkr-user-token"));
+
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
     const {token} = useContext(UserContext)

@@ -8,7 +8,9 @@ import { SearchField, SearchInput, AutocompleteBox, Suggestion, Image, Wrapper }
 import UserContext from "../../contexts/UserContext";
 
 function SearchBar(props){
-    const { token } = useContext(UserContext);
+    const token = 'qoasda342wf45iu36eq25iwueoqiwue';
+    //const { token } = useContext(UserContext);
+    const navigate = useNavigate();
     const [userList, setUserList] = useState([]);
     const [search, setSearch] = useState('');
     let showSuggestions = userList.length === 0;
@@ -55,8 +57,8 @@ function SearchBar(props){
                 {userList.map(({id, username, imageUrl}) => {
                         return (
                             <Suggestion onClick={() => {
-                                console.log(id);
                                 setUserList([]);
+                                navigate(`/user/${id}`);
                             }}>
                                 <Image src={imageUrl}/>
                                 <p>{username}</p> 
@@ -71,5 +73,3 @@ function SearchBar(props){
 
 
 export default SearchBar
-
-//TODO rota da pagina do usuario
