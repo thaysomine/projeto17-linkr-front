@@ -96,6 +96,11 @@ justify-content: center;
 align-items: center;
 `
 
+const PostDescription = styled.span`
+width: 100%;
+color: #B7B7B7;
+`
+
 const Content = styled.textarea`
 width: 100%;
 border: none;
@@ -265,4 +270,9 @@ const Input = styled.input`
     }
 `
 
-export {Body, VerticalStack, HorizontalStack, Likes, SnippetBody, SnippetImage, SnippetTitle, SnippetDescription, SnippetUrl, ChangeArea, PostForm, Content, ConfirmBox, ConfirmCard, CheckAnswer, GoBackButton, ConfirmButton, Input}
+const Hashtag = styled.span`
+color: white;
+font-weight: 800;
+`
+
+export {Body, VerticalStack, HorizontalStack, Likes, Hashtag, SnippetBody, SnippetImage, SnippetTitle, SnippetDescription, SnippetUrl, ChangeArea, PostForm,PostDescription,  Content, ConfirmBox, ConfirmCard, CheckAnswer, GoBackButton, ConfirmButton, Input}
