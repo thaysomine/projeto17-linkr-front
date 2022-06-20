@@ -1,20 +1,22 @@
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
-import styled from 'styled-components'
 
+import {Title, ContainerUser} from './styles';
 import Navbar from '../Navbar';
 import Main from '../MainContent';
 import UserContext from "../../contexts/UserContext";
+import { TrendingContext } from "../../contexts/TrendingContext";
 import { ContainerHashtag } from '../HashtagPage/style';
+import SearchBar from '../Navbar/SearchBar';
 
 export default function Userpage() {
-    const token = 'qoasda342wf45iu36eq25iwueoqiwue';
-    //const {token} = useContext(UserContext);
+    //const token = 'qoasda342wf45iu36eq25iwueoqiwue';
+    const {token} = useContext(UserContext);
+    const {trending} = useContext(TrendingContext);
     const {id} = useParams();
     const [posts, setPosts] = useState([]);
     const [username, setUsername] = useState('');
-    const hashtags = ["node", "javascript", "python", "linux"];
 
     useEffect(()=> {
         const config = {
@@ -31,37 +33,20 @@ export default function Userpage() {
         });
         promise.catch((e)=> console.log(e));
     }, [id]);
-
+    console.log(username);
     return (
         <>
             <Navbar />
             <ContainerUser>
                 <div>
+                    <SearchBar screen = "mobile"/>
                     <Title>{username}</Title>
-                    <Main posts={posts} hashtags={hashtags} />
+                    <Main posts={posts} hashtags={trending} />
                 </div>
             </ContainerUser>
         </>
     )
 }
 
-const Title = styled.div`
-    text-align: start;
-    font-size: 36px;
-    font-weight: bolder;
-    color: white;
-    padding-block: 20px;
-
-`;
-
-const ContainerUser = styled.div`
-    min-height: 100vh;
-    width: 100%;
-    background-color: #333333;
-    padding-top: 90px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    z-index: -1;
-`;
+// TODO arrumar a barra de pesquisa 
+// TODO versão mobile

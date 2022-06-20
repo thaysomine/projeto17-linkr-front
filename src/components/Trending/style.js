@@ -21,6 +21,10 @@ const ContainerTrending = styled.div`
         border: 1px #484848 solid;
         margin: 0;
     }
+    
+    @media(max-width: 750px){
+        display: none;
+    }
 `;
 
 const List = styled.ul`
