@@ -10,7 +10,7 @@ import LinkSnippet from "./LinkSnippet"
 function Post(props) {
 
 
-    const { username, postContent, link, likesCount, imageUrl, hashtag } = props
+    const { userName, postContent, link, likesCount, imageUrl } = props
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(0)
@@ -222,7 +222,7 @@ function Post(props) {
             <VerticalStack width={100} >
                 
                  <HorizontalStack alignment="space-between">
-                 {username}
+                 {userName}
                     <ChangeArea>
                         <ion-icon name="create-outline" onClick={() => performEdit()} />
                         <ion-icon name="trash-bin-outline" onClick={() => SetConfirmDelete(true)} />
