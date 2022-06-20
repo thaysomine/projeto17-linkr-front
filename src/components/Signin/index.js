@@ -25,8 +25,10 @@ function Signin() {
         )
         promise.then((response)=>{
             const token = response.data
+            console.log(token)
             setToken(token)
-            localStorage.setItem('linkr-user-token', token)
+            localStorage.setItem('linkr-user-token', token.token)
+            localStorage.setItem('linkr-user-id', token.userId)
             setLoading(false) 
             redirectUser("/timeline") 
         })

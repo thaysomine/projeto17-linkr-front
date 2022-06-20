@@ -10,7 +10,7 @@ import { LineWave } from "react-loader-spinner"
 
 function Timeline() {
 
-    alert(localStorage.getItem("linkr-user-token"));
+    // alert(localStorage.getItem("linkr-user-token"));
 
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
@@ -22,7 +22,7 @@ function Timeline() {
        promise.then((response) => {
             setLoading(false)
             setPosts(response.data)
-            console.log(response.data)
+            
        })
        promise.catch((error)=>{
         const confirm = window.confirm('An error occured while trying to fetch the posts, please refresh the page')
@@ -49,10 +49,11 @@ function Timeline() {
 
                  {
                      posts && posts.map((post, index) => {
-                         const { username, postsId, description, link, likesCount, imageUrl, hashtag } = post
+                         const { username, postsId, ownerId, description, link, likesCount, imageUrl, hashtag } = post
                          return <Post key={index}
                                       username  = {username}
                                       postsId   = {postsId}
+                                      ownerId   = {ownerId}
                                       postContent = {description}
                                       link = {link}
                                       likesCount = {likesCount}

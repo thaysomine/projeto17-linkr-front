@@ -109,8 +109,8 @@ background-color: ${props => props.editing ? 'white' : 'transparent'};
 `
 
 const ConfirmBox = styled.div`
-    background-color: rgba(255, 255, 255, 0.6);
-    position: absolute;
+    background-color: rgba(255, 255, 255,0.6);
+    position: fixed;
     z-index: 2;
     min-width:100%;
     min-height:100%;

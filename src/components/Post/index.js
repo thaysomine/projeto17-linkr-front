@@ -10,7 +10,7 @@ import LinkSnippet from "./LinkSnippet"
 function Post(props) {
 
 
-    const { username, postsId, postContent, link, likesCount, imageUrl, hashtag } = props
+    const { username, postsId, ownerId, postContent, link, likesCount, imageUrl, hashtag } = props
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(likesCount)
@@ -20,6 +20,7 @@ function Post(props) {
     const [confirmDelete, SetConfirmDelete] = useState(false)
     const inputRef = useRef();
     const token = localStorage.getItem('linkr-user-token')
+    const userId = localStorage.getItem('linkr-user-id')
     const navigate = useNavigate();
 
 
@@ -195,11 +196,14 @@ function Post(props) {
             <VerticalStack width={100} >
                 
                  <HorizontalStack alignment="space-between">
-                 {username}
-                    <ChangeArea>
-                        <ion-icon name="create-outline" onClick={() => performEdit()} />
-                        <ion-icon name="trash-bin-outline" onClick={() => SetConfirmDelete(true)} />
-                    </ChangeArea>
+                 {userId===ownerId ?
+                 <ChangeArea>
+                 <ion-icon name="create-outline" onClick={() => performEdit()} />
+                 <ion-icon name="trash-bin-outline" onClick={() => SetConfirmDelete(true)} />
+                </ChangeArea>
+                :
+                <></>}
+                    
                 </HorizontalStack>
                 {editing?
                         <>
