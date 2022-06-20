@@ -24,7 +24,7 @@ const SearchField = styled.div`
 background-color: white;
 width: 100%;
 height: auto;
-display:flex;
+display:${props => props.searchbar==='desktop' ? 'flex' : 'none'};
 align-items: center;
 justify-content: center;
 border-radius: 8px;
@@ -32,11 +32,11 @@ position: relative;
 z-index: 2;
 
 @media(max-width: 700px){
-    display: none;
+    display: ${props => props.searchbar==='mobile' ? 'flex' : 'none'};
+    z-index: 0;
 }
 `
 const SearchInput = styled.input`
-width: 100%;
 height: 30px;
 border: none;
 border-radius: 8px;
@@ -47,6 +47,9 @@ z-index: 2;
     box-shadow: 0 0 0 0;
     border: 0 none;
     outline: 0;
+}
+@media(max-width: 700px){
+    z-index: 1;
 }
 `
 const ProfPic = styled.div`

@@ -8,13 +8,13 @@ import { SearchField, SearchInput, AutocompleteBox, Suggestion, Image, Wrapper }
 import UserContext from "../../contexts/UserContext";
 
 function SearchBar(props){
-    const token = 'qoasda342wf45iu36eq25iwueoqiwue';
-    //const { token } = useContext(UserContext);
+    const {screen} = props;
+    //const token = 'qoasda342wf45iu36eq25iwueoqiwue';
+    const { token } = useContext(UserContext);
     const navigate = useNavigate();
     const [userList, setUserList] = useState([]);
     const [search, setSearch] = useState('');
     let showSuggestions = userList.length === 0;
-    console.log(showSuggestions)
 
     useEffect(() => {
         const config = {
@@ -39,7 +39,7 @@ function SearchBar(props){
 
     return(
         <Wrapper>
-            <SearchField>
+            <SearchField searchbar= {screen}>
                 <Wrapper>
                     <DebounceInput
                         element={SearchInput}
@@ -51,7 +51,12 @@ function SearchBar(props){
                         onChange={(event) => {
                             setSearch(event.target.value);
                     }} />
-                    <AiOutlineSearch color='#C6C6C6'/>
+                    <AiOutlineSearch color='#C6C6C6' size='25' onClick={()=> {
+                        setUserList([]);
+                        let id = userList[0].id;
+                        console.log(id);
+                        navigate(`/user/${id}`);
+                    }}/>
                 </Wrapper>
                 <AutocompleteBox suggestionBox = {showSuggestions}>
                 {userList.map(({id, username, imageUrl}) => {

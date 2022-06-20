@@ -7,6 +7,7 @@ const TrendingContext = createContext();
 const TrendingProvider = ({ children }) => {
     const [trending, setTrending] = useState();
     const { token } = useContext(UserContext);
+    //const token = 'qoasda342wf45iu36eq25iwueoqiwue';
 
     useEffect(() => {
         const config = {
@@ -16,6 +17,7 @@ const TrendingProvider = ({ children }) => {
         };
         const request = api.get("/trending", config);
         request.then((response) => {
+            console.log(response)
             setTrending(response.data);
         });
         request.catch((err) => {
