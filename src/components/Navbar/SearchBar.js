@@ -23,7 +23,7 @@ function SearchBar(props){
             }
         };
         const URL = `http://localhost:5000/search/${search}`;
-        if (!search.length == 0) {
+        if (!search.length === 0) {
             const promise = axios.get(URL, config);                                                       
             promise.then(response => {
                 console.log(response.data);

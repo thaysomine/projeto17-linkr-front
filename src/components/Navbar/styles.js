@@ -34,6 +34,7 @@ z-index: 2;
 @media(max-width: 700px){
     display: ${props => props.searchbar==='mobile' ? 'flex' : 'none'};
     z-index: 0;
+    margin: 10px;
 }
 `
 const SearchInput = styled.input`
@@ -50,6 +51,7 @@ z-index: 2;
 }
 @media(max-width: 700px){
     z-index: 1;
+    width: 100%;
 }
 `
 const ProfPic = styled.div`
@@ -135,6 +137,10 @@ const Wrapper = styled.div`
     box-sizing: border-box;
     padding: 0px 10px;
     height: auto;
+
+    @media (max-width: 700px){
+        width: 100%;
+    }
 `;
 
 const DropDownItem = styled.p``
