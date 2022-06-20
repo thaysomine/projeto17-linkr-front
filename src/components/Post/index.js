@@ -5,7 +5,8 @@ import { useNavigate } from 'react-router';
 import { ReactTinyLink } from 'react-tiny-link'
 import ReactTooltip from 'react-tooltip';
 import { ThreeDots } from "react-loader-spinner";
-import axios from "axios"
+import api from "../../api";
+
 
 function Post(props) {
 
@@ -27,11 +28,11 @@ function Post(props) {
     function handleLike(like, postId) {
         
         // const promise = axios.post(`http://heroku-linkr-api.herokuapp.com/like/${postId}`,null
-        const promise =  axios.post(`http://localhost:4000/like/${postId}`,null
+        const promise =  api.post(`like/${postId}`,null
           ,{
             headers: {
-                // Authorization: `Bearer ${token}`
-                Authorization: `Bearer 222`
+                Authorization: `Bearer ${token}`
+                // Authorization: `Bearer 222`
             },
           }
         )
@@ -55,10 +56,10 @@ function Post(props) {
     function likedByUser(postId) {
         if (token) {
             // const promise = axios.get(`http://heroku-linkr.herokuapp.com/liked/${postId}`, {
-            const promise = axios.get(`http://localhost:4000/liked/${postId}`,{
+            const promise = api.get(`liked/${postId}`,{
                 headers: {
-                    // Authorization: `Bearer ${token}`
-                    Authorization: `Bearer 222`
+                    Authorization: `Bearer ${token}`
+                    // Authorization: `Bearer 222`
                 }
             })
             
@@ -81,7 +82,7 @@ function Post(props) {
     function LikeCount(postId){
         useEffect(() => {
             // const promise = axios.get(`http://heroku-linkr-api.herokuapp.com/likes/${postId}`)
-            const promise = axios.get(`http://localhost:4000/likes/${postId}`)
+            const promise = api.get(`likes/${postId}`)
             promise.then((response) => {
                 
                 setLikes(parseInt(response.data.count))
@@ -96,11 +97,11 @@ function Post(props) {
     function Lista(postId){
         useEffect(() => {
         // const promise = axios.get(`http://heroku-linkr-api.herokuapp.com/names/${postId}`)
-        const promise = axios.get(`http://localhost:4000/names/${postId}`
+        const promise = api.get(`names/${postId}`
         ,{
             headers: {
-                // Authorization: `Bearer ${token}`
-                Authorization: `Bearer 222`
+                Authorization: `Bearer ${token}`
+                // Authorization: `Bearer 222`
             }
         })
         promise.then((response) => {
@@ -135,11 +136,11 @@ function Post(props) {
 
     function performDelete(postId) {
         // const promise = axios.delete(`http://heroku-linkr-api.herokuapp.com/posts/${postId}`)
-        const promise = axios.delete(`http://localhost:4000/posts/${postId}`
+        const promise = api.delete(`posts/${postId}`
         ,{
             headers: {
-                // Authorization: `Bearer ${token}`
-                Authorization: `Bearer 222`
+                Authorization: `Bearer ${token}`
+                // Authorization: `Bearer 222`
             }
         })
         promise.then((response) => {
@@ -214,9 +215,6 @@ function Post(props) {
                         onClick={() => handleLike(isLiked,idPost)}
                         />
                     {showLikes(idPost)}
-                    {/* {Lista(idPost)}
-                    {likedByUser(idPost)}
-                    {LikeCount(idPost)} */}
                     {`${likes} likes`}
                     <ReactTooltip type="info" effect="solid"/>
                 </Likes>

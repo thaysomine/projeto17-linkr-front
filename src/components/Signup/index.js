@@ -5,7 +5,8 @@ import { useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
 
 function Signup() {
-    const url = 'https://driven-linkr.herokuapp.com/signup'
+    //const url = 'https://driven-linkr.herokuapp.com/signup'
+    const url = 'http://localhost:5000/signup'
     const [signupData, setSignupData] = useState({ email: '', username: '', password: '', imageUrl: '' })
     const [loading, setLoading] = useState(false)
     const redirectUser = useNavigate()
