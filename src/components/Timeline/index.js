@@ -49,14 +49,16 @@ function Timeline() {
 
                  {
                      posts && posts.map((post, index) => {
-                         const { username, description, link, likesCount, imageUrl, hashtag } = post
+                         const { username, postsId, description, link, likesCount, imageUrl, hashtag } = post
                          return <Post key={index}
                                       username  = {username}
+                                      postsId   = {postsId}
                                       postContent = {description}
                                       link = {link}
                                       likesCount = {likesCount}
                                       imageUrl = {imageUrl}
-                                      hashtag = {hashtag}/>
+                                      hashtag = {hashtag}
+                                      />
                      })
                  }
 

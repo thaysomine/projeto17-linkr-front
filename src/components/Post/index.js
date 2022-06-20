@@ -10,10 +10,10 @@ import LinkSnippet from "./LinkSnippet"
 function Post(props) {
 
 
-    const { username, postContent, link, likesCount, imageUrl, hashtag } = props
+    const { username, postsId, postContent, link, likesCount, imageUrl, hashtag } = props
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false)
-    const [likes, setLikes] = useState(0)
+    const [likes, setLikes] = useState(likesCount)
     const [editing, SetEditing] = useState(false)
     const [newContent, SetNewContent] = useState(postContent);
     const [ListLikes, SetListLikes] = useState([])
@@ -24,27 +24,25 @@ function Post(props) {
 
 
 
-    function handleLike(like, postId) {
+    function handleLike(like, postsId, countL) {
         
         // const promise = axios.post(`http://heroku-linkr-api.herokuapp.com/like/${postId}`,null
-        const promise =  api.post(`like/${postId}`,null
+        const promise =  api.post(`like/${postsId}`,null
           ,{
             headers: {
                 Authorization: `Bearer ${token}`
-                // Authorization: `Bearer 222`
             },
           }
         )
         
         promise.then((response)=>{
             if(!like){
-                setLikes(likes + 1)
+                setLikes(parseInt(countL)+1)
                 console.log("curtiu")
             }else{ 
-                setLikes(likes - 1)
+                setLikes(parseInt(countL)-1)
                 console.log("descurtiu")
             }
-            
             
         })
         promise.catch((err)=>{
@@ -52,13 +50,12 @@ function Post(props) {
         })
         setIsLiked(!like) }
 
-    function likedByUser(postId) {
+    function likedByUser(postsId) {
         if (token) {
             // const promise = axios.get(`http://heroku-linkr.herokuapp.com/liked/${postId}`, {
-            const promise = api.get(`liked/${postId}`,{
+            const promise = api.get(`liked/${postsId}`,{
                 headers: {
                     Authorization: `Bearer ${token}`
-                    // Authorization: `Bearer 222`
                 }
             })
             
@@ -77,30 +74,13 @@ function Post(props) {
         }
     }
 
-
-    function LikeCount(postId){
-        useEffect(() => {
-            // const promise = axios.get(`http://heroku-linkr-api.herokuapp.com/likes/${postId}`)
-            const promise = api.get(`likes/${postId}`)
-            promise.then((response) => {
-                
-                setLikes(parseInt(response.data.count))
-            })
-            promise.catch((err) => {
-                console.log(err)
-            })
-        }, [handleLike])
-    }
-
-
-    function Lista(postId){
+    function Lista(postsId){
         useEffect(() => {
         // const promise = axios.get(`http://heroku-linkr-api.herokuapp.com/names/${postId}`)
-        const promise = api.get(`names/${postId}`
+        const promise = api.get(`names/${postsId}`
         ,{
             headers: {
                 Authorization: `Bearer ${token}`
-                // Authorization: `Bearer 222`
             }
         })
         promise.then((response) => {
@@ -130,13 +110,12 @@ function Post(props) {
         SetNewContent(e.target.value)
     }
 
-    function performDelete(postId) {
+    function performDelete(postsId) {
         // const promise = axios.delete(`http://heroku-linkr-api.herokuapp.com/posts/${postId}`)
-        const promise = api.delete(`posts/${postId}`
+        const promise = api.delete(`posts/${postsId}`
         ,{
             headers: {
                 Authorization: `Bearer ${token}`
-                // Authorization: `Bearer 222`
             }
         })
         promise.then((response) => {
@@ -155,13 +134,10 @@ function Post(props) {
         )
     }
 
-    function showLikes(postId){
-        {Lista(idPost)}
-        {likedByUser(idPost)}
-        {LikeCount(idPost)} 
+    function showLikes(postsId){
+        {Lista(postsId)}
+        {likedByUser(postsId)}
     }
-
-    const idPost = 4
 
     return (
         <>
@@ -172,21 +148,21 @@ function Post(props) {
 
                             {isLoading ?
                                 <>
-                                    <p>Apagando...</p>
+                                    <p>Deleting post...</p>
                                     <ThreeDots color="white" height={80} width={80}/> 
                                 </>
                                 :
                                 <>
                                     <p>
-                                        Deseja mesmo deletar este post?
+                                    Are you sure you want to delete this post?
                                     </p>
                                     <CheckAnswer>
-                                        <GoBackButton onClick={() => { SetConfirmDelete(false) }}> Não</GoBackButton>
+                                        <GoBackButton onClick={() => { SetConfirmDelete(false) }}> No, go back</GoBackButton>
                                         <ConfirmButton onClick={() => {
                                             setIsLoading(true)
-                                            performDelete(idPost)
+                                            performDelete(postsId)
                                         }}>
-                                            Sim
+                                            Yes, delete it
                                         </ConfirmButton>
                                     </CheckAnswer>
                                 </>
@@ -208,9 +184,9 @@ function Post(props) {
                 </ProfPic>
                 <Likes isLiked={isLiked}>                                  
                     <ion-icon data-tip={ListLikes} name={`heart${isLiked ? '' : '-outline'}`}
-                        onClick={() => handleLike(isLiked,idPost)}
+                        onClick={() => handleLike(isLiked, postsId, likes)}
                         />
-                    {showLikes(idPost)}
+                    {showLikes(postsId)}
                     {`${likes} likes`}
                     <ReactTooltip type="info" effect="solid"/>
                 </Likes>
