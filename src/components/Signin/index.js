@@ -27,10 +27,9 @@ function Signin() {
             setUserInfo(
                 {
                     token: token, 
-                    userdId: userId
+                    userId: userId
                 }
             )
-            console.log(token, userId)
             localStorage.setItem('linkr-user-credentials', JSON.stringify({token: token, userId: userId}))
             setLoading(false) 
             redirectUser("/timeline") 

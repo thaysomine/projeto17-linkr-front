@@ -1,17 +1,16 @@
 import { Body, VerticalStack, HorizontalStack, Likes, Hashtag, ChangeArea, PostForm, PostDescription,  Content, ConfirmBox, ConfirmCard, CheckAnswer, GoBackButton, ConfirmButton, Input } from "./styles"
 import { ProfPic, Image } from "../Navbar/styles"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, useContext } from "react"
 import { useNavigate } from 'react-router';
 import ReactTooltip from 'react-tooltip';
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios"
 import LinkSnippet from "./LinkSnippet"
 
-
 function Post(props) {
 
 
-    const { id, username, postContent, link, likesCount, imageUrl, hashtag } = props
+    const { postId, userId,  ownerId, username, postContent, link, likesCount, imageUrl, hashtag } = props
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(0)
@@ -22,8 +21,8 @@ function Post(props) {
     const [hashstags,setHashtags] = useState([])
     const token = localStorage.getItem('linkr-user-token')
     const navigate = useNavigate();
-
-
+ 
+        console.log(userId, ownerId)
 
     function handleLike(like, postId) {
 
@@ -237,7 +236,7 @@ function Post(props) {
 
                     <HorizontalStack alignment="space-between">
                         {username}
-                        <ChangeArea>
+                        <ChangeArea visible = {userId === ownerId}>
                             <ion-icon name="create-outline" onClick={() => performEdit()} />
                             <ion-icon name="trash-bin-outline" onClick={() => SetConfirmDelete(true)} />
                         </ChangeArea>

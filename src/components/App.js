@@ -11,7 +11,7 @@ import { TrendingProvider } from "../contexts/TrendingContext";
 export default function App() {
     const [userInfo, setUserInfo] = useState(
         {token: localStorage.getItem("linkr-user-token"), 
-         userId: ''}
+         userId: 3}
     );
     return (
         <UserContext.Provider value={{ userInfo, setUserInfo }}>

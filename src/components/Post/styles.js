@@ -82,6 +82,7 @@ ion-icon{
 `
 
 const ChangeArea = styled.div`
+display: ${props => props.visible ? 'flex' : 'none'};
 ion-icon{
     font-size: large;
     font-weight: 800;
