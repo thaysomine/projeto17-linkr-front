@@ -10,7 +10,8 @@ import { TrendingContext } from "../../contexts/TrendingContext";
 const HashtagPage = () => {
     const { hashtag: hashtagName } = useParams();
     const [posts, setPosts] = useState();
-    const { token } = useContext(UserContext);
+    const { userInfo } = useContext(UserContext);
+    const { token } = userInfo
     const { trending } = useContext(TrendingContext);
 
     useEffect(() => {

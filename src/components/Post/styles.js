@@ -82,6 +82,7 @@ ion-icon{
 `
 
 const ChangeArea = styled.div`
+display: ${props => props.visible ? 'flex' : 'none'};
 ion-icon{
     font-size: large;
     font-weight: 800;
@@ -94,6 +95,11 @@ width: 100%;
 display: flex;
 justify-content: center;
 align-items: center;
+`
+
+const PostDescription = styled.span`
+width: 100%;
+color: #B7B7B7;
 `
 
 const Content = styled.textarea`
@@ -265,4 +271,9 @@ const Input = styled.input`
     }
 `
 
-export {Body, VerticalStack, HorizontalStack, Likes, SnippetBody, SnippetImage, SnippetTitle, SnippetDescription, SnippetUrl, ChangeArea, PostForm, Content, ConfirmBox, ConfirmCard, CheckAnswer, GoBackButton, ConfirmButton, Input}
+const Hashtag = styled.span`
+color: white;
+font-weight: 800;
+`
+
+export {Body, VerticalStack, HorizontalStack, Likes, Hashtag, SnippetBody, SnippetImage, SnippetTitle, SnippetDescription, SnippetUrl, ChangeArea, PostForm,PostDescription,  Content, ConfirmBox, ConfirmCard, CheckAnswer, GoBackButton, ConfirmButton, Input}

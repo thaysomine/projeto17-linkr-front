@@ -7,10 +7,10 @@ import UserContext from "../../contexts/UserContext";
 
 
 function Signin() {
-    const url = 'https://driven-linkr.herokuapp.com/signin'
+    const url = 'http://localhost:5000/signin'
     const [signinData, setSigninData] = useState({ email: '', password: '' })
     const [loading, setLoading] = useState(false)
-    const { setToken } = useContext(UserContext)
+    const { setUserInfo } = useContext(UserContext)
     const redirectUser = useNavigate()
 
     function signin(event) {
@@ -23,9 +23,13 @@ function Signin() {
             }
         )
         promise.then((response)=>{
-            const token = response.data
-            setToken(token)
-            localStorage.setItem('linkr-user-token', token)
+            const {token} = response.data
+            setUserInfo(
+                {
+                    token: token
+                }
+            )
+            localStorage.setItem('linkr-user-credentials', JSON.stringify({token: token}))
             setLoading(false) 
             redirectUser("/timeline") 
         })

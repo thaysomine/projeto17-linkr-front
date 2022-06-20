@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import React from "react";
 import Signup from "./Signup";
 import Signin from "./Signin";
@@ -10,11 +10,13 @@ import UserContext from "../contexts/UserContext";
 import { TrendingProvider } from "../contexts/TrendingContext";
 
 export default function App() {
-    const [token, setToken] = useState(
-        localStorage.getItem("linkr-user-token")
+    const userObject = localStorage.getItem('linkr-user-credentials')
+    const {token} = JSON.parse(userObject) || {token: null}
+    const [userInfo, setUserInfo] = useState(
+        {token: token}
     );
     return (
-        <UserContext.Provider value={{ token, setToken }}>
+        <UserContext.Provider value={{ userInfo, setUserInfo }}>
             <TrendingProvider>
                 <BrowserRouter>
                     <Routes>
