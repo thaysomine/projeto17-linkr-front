@@ -13,7 +13,6 @@ function Timeline() {
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
     const {userInfo} = useContext(UserContext)
-    console.log(userInfo)
     const {token, userId} = userInfo
     
  

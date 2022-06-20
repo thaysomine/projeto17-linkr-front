@@ -8,7 +8,8 @@ import { SearchField, SearchInput, AutocompleteBox, Suggestion, Image, Wrapper }
 import UserContext from "../../contexts/UserContext";
 
 function SearchBar(props){
-    const { token } = useContext(UserContext);
+    const { userInfo } = useContext(UserContext);
+    const { token } = userInfo
     const [userList, setUserList] = useState([]);
     const [search, setSearch] = useState('');
     let showSuggestions = userList.length === 0;

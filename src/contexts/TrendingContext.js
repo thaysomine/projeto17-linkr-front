@@ -6,7 +6,8 @@ const TrendingContext = createContext();
 
 const TrendingProvider = ({ children }) => {
     const [trending, setTrending] = useState();
-    const { token } = useContext(UserContext);
+    const { userInfo } = useContext(UserContext);
+    const { token } = userInfo
 
     useEffect(() => {
         const config = {
