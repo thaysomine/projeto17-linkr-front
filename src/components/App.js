@@ -10,10 +10,9 @@ import { TrendingProvider } from "../contexts/TrendingContext";
 
 export default function App() {
     const userObject = localStorage.getItem('linkr-user-credentials')
-    const {token, userId} = JSON.parse(userObject) || {token: null, userId: null}
+    const {token} = JSON.parse(userObject) || {token: null}
     const [userInfo, setUserInfo] = useState(
-        {token: token, 
-         userId: userId}
+        {token: token}
     );
     return (
         <UserContext.Provider value={{ userInfo, setUserInfo }}>

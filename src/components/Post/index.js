@@ -10,7 +10,7 @@ import LinkSnippet from "./LinkSnippet"
 function Post(props) {
 
 
-    const { postId, userId,  ownerId, username, postContent, link, likesCount, imageUrl, hashtag } = props
+    const { postId, isOwner, username, postContent, link, likesCount, imageUrl, hashtag } = props
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(0)
@@ -18,12 +18,10 @@ function Post(props) {
     const [newContent, SetNewContent] = useState(postContent);
     const [ListLikes, SetListLikes] = useState([])
     const [confirmDelete, SetConfirmDelete] = useState(false)
-    const [hashstags,setHashtags] = useState([])
     const token = localStorage.getItem('linkr-user-token')
     const navigate = useNavigate();
  
-        console.log(userId, ownerId)
-
+    console.log(postId)
     function handleLike(like, postId) {
 
         // const promise = axios.post(`http://heroku-linkr-api.herokuapp.com/like/${postId}`,null
@@ -122,9 +120,25 @@ function Post(props) {
             SetEditing(true);
         }
         else {
-            
+
+            const promise = axios.put(`http://localhost:5000/post/${postId}`, {description: newContent, postId: postId}
+            , {
+                headers: {
+                    // Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
+                },
+            }
+        )
+
+        promise.then(() => {
             SetEditing(false)
             SetNewContent(postContent)
+        })
+        promise.catch((err) => {
+            alert("Falha ao editar conteúdo")
+        })
+            
+
         }
     }
 
@@ -236,7 +250,7 @@ function Post(props) {
 
                     <HorizontalStack alignment="space-between">
                         {username}
-                        <ChangeArea visible = {userId === ownerId}>
+                        <ChangeArea visible = {isOwner}>
                             <ion-icon name="create-outline" onClick={() => performEdit()} />
                             <ion-icon name="trash-bin-outline" onClick={() => SetConfirmDelete(true)} />
                         </ChangeArea>
@@ -251,7 +265,9 @@ function Post(props) {
                                 value={newContent}
                                 onKeyDown={(e) => {
                                     if (e.key === 'Enter') {
+                                        SetEditing(false)
                                         performEdit()
+                                        
                                     }
                                     if (e.key === 'Escape') {
                                         SetEditing(false)

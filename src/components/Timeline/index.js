@@ -13,12 +13,11 @@ function Timeline() {
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
     const {userInfo} = useContext(UserContext)
-    const {token, userId} = userInfo
+    const {token} = userInfo
     
  
     function getPosts() {
 
-        console.log(token, userInfo.userId)
         const config = { headers: { Authorization: `Bearer ${token}` },
                          params: {limit: 10}}
        const promise = axios.get('http://localhost:5000/timeline', config)
@@ -52,11 +51,10 @@ function Timeline() {
 
                  {
                      posts && posts.map((post, index) => {
-                         const { id, ownerId, username, description, link, likesCount, imageUrl, hashtag } = post
+                         const { postId, isOwner, username, description, link, likesCount, imageUrl, hashtag } = post
                          return <Post key={index}
-                                      userId = {userId}
-                                      ownerId = {parseInt(ownerId)}
-                                      postId = {id}
+                                      isOwner = {isOwner}
+                                      postId = {postId}
                                       username  = {username}
                                       postContent = {description}
                                       link = {link}
