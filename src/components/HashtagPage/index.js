@@ -1,18 +1,17 @@
-import { ContainerHashtag, Feed, MainContent, Title } from "./style";
+import { ContainerHashtag, Title } from "./style";
+import MainContent from "../MainContent";
 import Navbar from "../Navbar";
 import { useParams } from "react-router-dom";
 import api from "../../api";
 import { useContext, useEffect, useState } from "react";
-import Post from "../Post";
-import Trending from "../Trending";
 import UserContext from "../../contexts/UserContext";
+import { TrendingContext } from "../../contexts/TrendingContext";
 
 const HashtagPage = () => {
     const { hashtag: hashtagName } = useParams();
     const [posts, setPosts] = useState();
     const { token } = useContext(UserContext);
-    console.log(token);
-    const hashtags = ["node", "javascript", "python", "linux"];
+    const { trending } = useContext(TrendingContext);
 
     useEffect(() => {
         const config = {
@@ -22,40 +21,23 @@ const HashtagPage = () => {
         };
         const request = api.get(`hashtag/${hashtagName}`, config);
         request.then((response) => {
-            console.log(response.data);
             setPosts(response.data);
         });
         request.catch((err) => {
             console.log(err);
         });
-    }, [hashtagName]);
-
-    console.log(hashtagName);
-    console.log(posts);
+    }, [hashtagName, token]);
 
     return (
-        <ContainerHashtag>
+        <>
             <Navbar />
-            <div>
-                <Title># {hashtagName}</Title>
-                <MainContent>
-                    <Feed>
-                        {posts?.map((post) => {
-                            return (
-                                <Post
-                                    userName={post.username}
-                                    postContent={post.description}
-                                    link={post.link}
-                                    likesCount={0}
-                                    imageUrl={post.imageUrl}
-                                />
-                            );
-                        })}
-                    </Feed>
-                    <Trending hashtags={hashtags} />
-                </MainContent>
-            </div>
-        </ContainerHashtag>
+            <ContainerHashtag>
+                <div>
+                    <Title># {hashtagName}</Title>
+                    <MainContent posts={posts} hashtags={trending} />
+                </div>
+            </ContainerHashtag>
+        </>
     );
 };
 
