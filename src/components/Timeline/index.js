@@ -12,7 +12,8 @@ function Timeline() {
 
     const [posts, setPosts] = useState([])
     const [loading, setLoading] = useState(true)
-    const {token} = useContext(UserContext)
+    const {userInfo} = useContext(UserContext)
+    const {token} = userInfo
     function getPosts() {
         const config = { headers: { Authorization: `Bearer ${token}` },
                          params: {limit: 10}}
@@ -47,8 +48,9 @@ function Timeline() {
 
                  {
                      posts && posts.map((post, index) => {
-                         const { username, description, link, likesCount, imageUrl, hashtag } = post
+                         const { id, username, description, link, likesCount, imageUrl, hashtag } = post
                          return <Post key={index}
+                                      id = {id}
                                       username  = {username}
                                       postContent = {description}
                                       link = {link}

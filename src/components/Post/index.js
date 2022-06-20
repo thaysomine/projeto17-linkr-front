@@ -1,6 +1,6 @@
 import { Body, VerticalStack, HorizontalStack, Likes, Hashtag, ChangeArea, PostForm, PostDescription,  Content, ConfirmBox, ConfirmCard, CheckAnswer, GoBackButton, ConfirmButton, Input } from "./styles"
 import { ProfPic, Image } from "../Navbar/styles"
-import { useState, useEffect, useRef, useFocus } from "react"
+import { useState, useEffect, useRef } from "react"
 import { useNavigate } from 'react-router';
 import ReactTooltip from 'react-tooltip';
 import { ThreeDots } from "react-loader-spinner";
@@ -11,7 +11,7 @@ import LinkSnippet from "./LinkSnippet"
 function Post(props) {
 
 
-    const { username, postContent, link, likesCount, imageUrl, hashtag } = props
+    const { id, username, postContent, link, likesCount, imageUrl, hashtag } = props
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(0)
@@ -20,7 +20,6 @@ function Post(props) {
     const [ListLikes, SetListLikes] = useState([])
     const [confirmDelete, SetConfirmDelete] = useState(false)
     const [hashstags,setHashtags] = useState([])
-    const inputRef = useRef();
     const token = localStorage.getItem('linkr-user-token')
     const navigate = useNavigate();
 
@@ -29,11 +28,11 @@ function Post(props) {
     function handleLike(like, postId) {
 
         // const promise = axios.post(`http://heroku-linkr-api.herokuapp.com/like/${postId}`,null
-        const promise = axios.post(`http://localhost:4000/like/${postId}`, null
+        const promise = axios.post(`http://localhost:5000/like/${postId}`, null
             , {
                 headers: {
                     // Authorization: `Bearer ${token}`
-                    Authorization: `Bearer 222`
+                    Authorization: `Bearer ${token}`
                 },
             }
         )
@@ -83,7 +82,7 @@ function Post(props) {
     function LikeCount(postId) {
         useEffect(() => {
             // const promise = axios.get(`http://heroku-linkr-api.herokuapp.com/likes/${postId}`)
-            const promise = axios.get(`http://localhost:4000/likes/${postId}`)
+            const promise = axios.get(`http://localhost:5000/likes/${postId}`)
             promise.then((response) => {
 
                 setLikes(parseInt(response.data.count))
@@ -97,11 +96,11 @@ function Post(props) {
     function Lista(postId) {
         useEffect(() => {
             // const promise = axios.get(`http://heroku-linkr-api.herokuapp.com/names/${postId}`)
-            const promise = axios.get(`http://localhost:4000/names/${postId}`
+            const promise = axios.get(`http://localhost:5000/names/${postId}`
                 , {
                     headers: {
                         // Authorization: `Bearer ${token}`
-                        Authorization: `Bearer 222`
+                        Authorization: `Bearer ${token}`
                     }
                 })
             promise.then((response) => {
@@ -116,12 +115,15 @@ function Post(props) {
         }, [isLiked])
     }
 
+    let finishEditing = false
+    
 
     function performEdit() {
         if (!editing) {
             SetEditing(true);
         }
         else {
+            
             SetEditing(false)
             SetNewContent(postContent)
         }

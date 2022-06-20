@@ -8,12 +8,13 @@ function Navbar() {
     
     const redirectUser = useNavigate()
     function signout() {
-        localStorage.removeItem('linkr-user-token')
+        localStorage.removeItem('linkr-user-credentials')
         redirectUser("/")
     }
 
     function verifyUser(){
-        const token = localStorage.getItem('linkr-user-token')
+        const tokenObject = localStorage.getItem('linkr-user-credentials')
+        const {token} = JSON.parse(tokenObject)
         //FUTURO: verificar se a sessão expirou 
         if (!token) redirectUser('/')
     }
