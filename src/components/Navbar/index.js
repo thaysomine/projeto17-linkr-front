@@ -24,10 +24,10 @@ function Navbar() {
     return (
         <Header>
             <Logo>linkr</Logo>
-            <SearchBar />
+            <SearchBar screen="desktop"/>
             <ProfPic>
             <ion-icon name={`chevron-${menuToggle ? 'down': 'up'}-outline`}
-                       onClick={()=> setMenuToggle(!menuToggle)} />
+                onClick={()=> setMenuToggle(!menuToggle)} />
                 <Image />
             </ProfPic>
             <DropDownContent isShowing = {menuToggle}>

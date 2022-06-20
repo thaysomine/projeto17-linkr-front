@@ -8,6 +8,8 @@ const TrendingProvider = ({ children }) => {
     const [trending, setTrending] = useState();
     const { userInfo } = useContext(UserContext);
     const { token } = userInfo
+    //const token = 'qoasda342wf45iu36eq25iwueoqiwue';
+
 
     useEffect(() => {
         const config = {
@@ -17,6 +19,7 @@ const TrendingProvider = ({ children }) => {
         };
         const request = api.get("/trending", config);
         request.then((response) => {
+            console.log(response)
             setTrending(response.data);
         });
         request.catch((err) => {

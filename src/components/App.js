@@ -5,6 +5,7 @@ import Signup from "./Signup";
 import Signin from "./Signin";
 import Timeline from "./Timeline";
 import HashtagPage from "./HashtagPage";
+import Userpage from "./Userpage";
 import UserContext from "../contexts/UserContext";
 import { TrendingProvider } from "../contexts/TrendingContext";
 
@@ -26,6 +27,7 @@ export default function App() {
                             path="/hashtag/:hashtag"
                             element={<HashtagPage />}
                         />
+                        <Route path="/user/:id" element={<Userpage />} />
                     </Routes>
                 </BrowserRouter>
             </TrendingProvider>

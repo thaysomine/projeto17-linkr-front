@@ -10,7 +10,9 @@ import LinkSnippet from "./LinkSnippet"
 function Post(props) {
 
 
+
     const { postId, isOwner, username, postContent, link, likesCount, imageUrl, hashtag } = props
+
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(0)
@@ -241,6 +243,7 @@ function Post(props) {
                         {/* {Lista(idPost)}
                     {likedByUser(idPost)}
                     {LikeCount(idPost)} */}
+
                         {`${likes} likes`}
                         <ReactTooltip type="info" effect="solid" />
                     </Likes>
