@@ -3,6 +3,8 @@ import Trending from "../Trending";
 import Post from "../Post";
 
 const MainContent = ({ posts, hashtags, children }) => {
+    console.log("AQUIIIIIIIIIIIIIIIIi");
+    console.log(posts);
     return (
         <Content>
             <Feed>
@@ -15,11 +17,13 @@ const MainContent = ({ posts, hashtags, children }) => {
                     posts?.map((post) => {
                         return (
                             <Post
-                                userName={post.username}
+                                username={post.username}
                                 postContent={post.description}
                                 link={post.link}
                                 likesCount={0}
                                 imageUrl={post.imageUrl}
+                                postId={post.postId}
+                                // isOwner={post.userId === }
                             />
                         );
                     })
