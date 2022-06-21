@@ -1,7 +1,6 @@
-import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { useContext, useState, useEffect } from "react";
-
+import api from "../../api";
 import { Title, ContainerUser } from "./styles";
 import Navbar from "../Navbar";
 import Main from "../MainContent";
@@ -25,8 +24,8 @@ export default function Userpage() {
                 Authorization: `Bearer ${token}`,
             },
         };
-        const URL = `http://localhost:5000/user/${id}`;
-        const promise = axios.get(URL, config);
+        const URL = `user/${id}`;
+        const promise = api.get(URL, config);
         promise.then((response) => {
             console.log(response);
             setPosts(response.data.posts);

@@ -19,7 +19,7 @@ const MainContent = styled.div`
 const Feed = styled.div`
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 45px;
     align-items: center;
 `;
 

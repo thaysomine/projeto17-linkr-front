@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const Title = styled.div`
     text-align: start;
@@ -6,7 +6,7 @@ const Title = styled.div`
     font-weight: bolder;
     color: white;
     padding-block: 20px;
-
+    padding-bottom: 40px;
 `;
 
 const ContainerUser = styled.div`
@@ -20,9 +20,8 @@ const ContainerUser = styled.div`
     align-items: center;
     z-index: -1;
 
-    @media(max-width: 750px){
-
+    @media (max-width: 750px) {
     }
 `;
 
-export {Title, ContainerUser}
+export { Title, ContainerUser };

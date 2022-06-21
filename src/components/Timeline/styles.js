@@ -15,19 +15,20 @@ const Main = styled.main`
 `;
 
 const Posts = styled.section`
- height: 100%;
- width: 100%;
- display: flex;
- flex-direction: column;
- align-items: center;
- `
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
 
 const H1 = styled.h1`
-    font-family: 'Oswald';
+    font-family: "Oswald";
     font-style: normal;
     font-weight: 900;
     font-size: 43px;
-    color: #FFFFFF;
+    color: #ffffff;
+    margin-bottom: 30px;
 `;
 
-export {Main,Posts, H1}
+export { Main, Posts, H1 };

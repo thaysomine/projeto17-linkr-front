@@ -33,6 +33,7 @@ function Post({
     likesCount,
     imageUrl,
     hashtag,
+    userId,
 }) {
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
@@ -204,7 +205,7 @@ function Post({
                 <Hashtag key={index}>
                     <Link to={`/hashtag/${string.replace("#", "").trim()}`}>
                         {string}
-                    </Link>{" "}
+                    </Link>
                 </Hashtag>
             );
         });
@@ -233,7 +234,6 @@ function Post({
                                             SetConfirmDelete(false);
                                         }}
                                     >
-                                        {" "}
                                         Não
                                     </GoBackButton>
                                     <ConfirmButton
@@ -256,7 +256,10 @@ function Post({
             <Body>
                 <VerticalStack margin={8}>
                     <ProfPic>
-                        <Image src={imageUrl} />
+                        <Image
+                            src={imageUrl}
+                            onClick={() => navigate(`/user/${userId}`)}
+                        />
                     </ProfPic>
                     <Likes isLiked={isLiked}>
                         <ion-icon
@@ -276,7 +279,7 @@ function Post({
 
                 <VerticalStack width={100}>
                     <HorizontalStack alignment="space-between">
-                        {username}
+                        <Link to={`/user/${userId}`}> {username} </Link>
                         <ChangeArea visible={isOwner}>
                             <ion-icon
                                 name="create-outline"

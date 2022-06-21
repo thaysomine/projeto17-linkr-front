@@ -7,7 +7,6 @@ const Body = styled.article`
     display: flex;
     padding: 10px;
     color: white;
-    margin-top: 30px;
 `;
 const VerticalStack = styled.div`
     width: ${(props) => props.width}%;
@@ -27,6 +26,11 @@ const HorizontalStack = styled.div`
         props.alignment ? props.alignment : "flex-start"};
     padding: ${(props) => props.padding};
     margin: ${(props) => props.margin}px;
+
+    a {
+        color: white;
+        text-decoration: none;
+    }
 `;
 
 const SnippetBody = styled.article`

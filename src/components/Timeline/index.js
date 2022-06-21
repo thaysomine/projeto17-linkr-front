@@ -3,7 +3,7 @@ import Navbar from "../Navbar";
 import Post from "../Post";
 import CreatePost from "../createPost";
 import { useContext, useEffect, useState } from "react";
-import axios from "axios";
+import api from "../../api";
 import UserContext from "../../contexts/UserContext";
 import { LineWave } from "react-loader-spinner";
 import MainContent from "../MainContent";
@@ -21,7 +21,7 @@ function Timeline() {
             headers: { Authorization: `Bearer ${token}` },
             params: { limit: 10 },
         };
-        const promise = axios.get("http://localhost:5000/timeline", config);
+        const promise = api.get("timeline", config);
         promise.then((response) => {
             setLoading(false);
             setPosts(response.data);
@@ -44,11 +44,6 @@ function Timeline() {
                 <H1>Timeline</H1>
 
                 <Posts>
-                    {loading && <LineWave color="white" />}
-                    {posts.length === 0 && !loading && (
-                        <H1>There are no posts yet</H1>
-                    )}
-
                     {/* {posts &&
                         posts.map((post, index) => {
                             const {
@@ -77,6 +72,10 @@ function Timeline() {
                         })} */}
                     <MainContent posts={posts} hashtags={trending}>
                         <CreatePost></CreatePost>
+                        {loading && <LineWave color="white" />}
+                        {posts.length === 0 && !loading && (
+                            <H1>There are no posts yet</H1>
+                        )}
                     </MainContent>
                 </Posts>
             </Main>
