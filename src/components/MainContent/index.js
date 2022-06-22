@@ -17,17 +17,19 @@ const MainContent = ({ posts, hashtags, children }) => {
                     </h1>
                 ) : (
                     posts?.map((post) => {
+                        console.log(post)
                         return (
                             <Post
                                 key={post.postId}
                                 username={post.username}
                                 postContent={post.description}
                                 link={post.link}
-                                likesCount={0}
+                                likesCount={post.likesCount>0?parseInt(post.likesCount):0}
                                 imageUrl={post.imageUrl}
                                 postId={post.postId}
                                 isOwner={post.userId === userInfo.userId}
                                 userId={post.userId}
+                                sharedBy={post.sharedBy}
                             />
                         );
                     })

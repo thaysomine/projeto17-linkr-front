@@ -11,22 +11,27 @@ function Post(props) {
 
 
 
-    const { postId, isOwner, username, postContent, link, likesCount, imageUrl, hashtag } = props
+    const { postId, userId, isOwner, sharedBy, username, postContent, link, likesCount, imageUrl, hashtag } = props
+    console.log(sharedBy)
+
 
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(likesCount)
+    const [repost, setRepost] = useState(0)
+    const [nameRepost, setnameRepost] = useState('')
     const [editing, SetEditing] = useState(false)
     const [newContent, SetNewContent] = useState(postContent);
     const [ListLikes, SetListLikes] = useState([])
     const [confirmDelete, SetConfirmDelete] = useState(false)
     const [confirmRepost, SetConfirmRepost] = useState(false)
     const token = localStorage.getItem('linkr-user-token')
+    const userLocal = localStorage.getItem("linkr-user-id")
     const navigate = useNavigate();
+
 
     const isRepost = true
  
-    console.log(postId)
     function handleLike(like, postId) {
 
         const promise = api.post(`like/${postId}`, null
@@ -95,7 +100,6 @@ function Post(props) {
             const promise = api.get(`names/${postId}`
                 , {
                     headers: {
-                        // Authorization: `Bearer ${token}`
                         Authorization: `Bearer ${token}`
                     }
                 })
@@ -184,7 +188,68 @@ function Post(props) {
         })
     }
 
-    function performRepost(postId){}
+    function getRepost(postId){
+        const promise = api.get(`repost/${postId}`
+        , {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        promise.then((response) => {
+            setRepost(parseInt(response.data.rowCount))
+        }
+        )
+        promise.catch((err) => {
+            alert("Ops! Algo deu errado, tente novamente mais tarde")
+            console.log(err)
+        }
+        )
+    }
+
+    function performRepost(postId){
+        const body = {
+            userId: parseInt(userLocal),
+            postId: postId,
+            userPost: userId
+        }
+
+        const promise = api.post(`repost/${postId}
+        `,body
+        ,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        promise.then((response) => {
+            window.location.reload();
+            SetConfirmRepost(false)
+            setIsLoading(false)
+            
+            
+        }
+        )
+        promise.catch((err) => {
+            alert("Ops! Algo deu errado, tente novamente mais tarde")
+            setIsLoading(false)
+            SetConfirmRepost(false)
+            console.log(err)
+        }
+        )
+    }
+
+    function getAllRepost(){
+        const promise = api.get(`allreposts/`)
+        promise.then((response) => {
+            console.log(response)
+        }
+        )
+        promise.catch((err) => {
+            alert("Ops! Algo deu errado, tente novamente mais tarde")
+            console.log(err)
+        }
+        )
+    }
+
 
 
     return (
@@ -257,10 +322,10 @@ function Post(props) {
                     
             <Body>
                 <>
-                {isRepost?
+                {sharedBy?
                     (<RepostBox>
                     <ion-icon name="repeat"/>
-                    <span>Re-posted by <strong>you</strong> </span>
+                    <span>Re-posted by <strong>{sharedBy}</strong> </span>
                     </RepostBox>) 
                 :
                 ('')}
@@ -285,7 +350,8 @@ function Post(props) {
                     </Likes>
                     <Likes>
                         <ion-icon name="repeat" onClick={() => SetConfirmRepost(true)}/>
-                        {`0 re-posts`}
+                        {getRepost(postId)}
+                        {`${repost} re-posts`}
                     </Likes>
                 </VerticalStack>
 
