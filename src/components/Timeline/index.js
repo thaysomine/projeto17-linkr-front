@@ -8,6 +8,7 @@ import UserContext from "../../contexts/UserContext";
 import { LineWave } from "react-loader-spinner";
 import MainContent from "../MainContent";
 import { TrendingContext } from "../../contexts/TrendingContext";
+import { ChangeEvent } from "react";
 
 function Timeline() {
     const [posts, setPosts] = useState([]);

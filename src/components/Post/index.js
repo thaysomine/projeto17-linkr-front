@@ -23,6 +23,7 @@ import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 import LinkSnippet from "./LinkSnippet";
 import { Link } from "react-router-dom";
+import api from "../../api";
 
 function Post({
     postId,
@@ -50,8 +51,7 @@ function Post({
 
     function handleLike(like, postId) {
         // const promise = axios.post(`http://heroku-linkr-api.herokuapp.com/like/${postId}`,null
-        const promise = axios.post(
-            `http://localhost:5000/like/${postId}`,
+        const promise = api.post(`like/${postId}`,
             null,
             {
                 headers: {
@@ -79,7 +79,7 @@ function Post({
     function likedByUser(postId) {
         if (token) {
             // const promise = axios.get(`http://heroku-linkr.herokuapp.com/liked/${postId}`, {
-            const promise = axios.get(`http://localhost:5000/liked/${postId}`, {
+            const promise = api.get(`liked/${postId}`, {
                 headers: {
                     // Authorization: `Bearer ${token}`
                     Authorization: `Bearer 222`,
@@ -102,7 +102,7 @@ function Post({
     function LikeCount(postId) {
         useEffect(() => {
             // const promise = axios.get(`http://heroku-linkr-api.herokuapp.com/likes/${postId}`)
-            const promise = axios.get(`http://localhost:5000/likes/${postId}`);
+            const promise = api.get(`likes/${postId}`);
             promise.then((response) => {
                 setLikes(parseInt(response.data.count));
             });
@@ -115,7 +115,7 @@ function Post({
     function Lista(postId) {
         useEffect(() => {
             // const promise = axios.get(`http://heroku-linkr-api.herokuapp.com/names/${postId}`)
-            const promise = axios.get(`http://localhost:5000/names/${postId}`, {
+            const promise = api.get(`names/${postId}`, {
                 headers: {
                     // Authorization: `Bearer ${token}`
                     Authorization: `Bearer ${token}`,
@@ -133,8 +133,7 @@ function Post({
 
     function performEdit() {
 
-            const promise = axios.put(
-                `http://localhost:4000/post/${postId}`,
+            const promise = api.put(`post/${postId}`,
                 { description: newContent, postId: postId },
                 {
                     headers: {
@@ -163,7 +162,7 @@ function Post({
 
     function performDelete(postId) {
         // const promise = axios.delete(`http://heroku-linkr-api.herokuapp.com/posts/${postId}`)
-        const promise = axios.delete(`http://localhost:4000/posts/${postId}`, {
+        const promise = api.delete(`posts/${postId}`, {
             headers: {
                 // Authorization: `Bearer ${token}`
                 Authorization: `Bearer 222`,
