@@ -6,6 +6,7 @@ import UserContext from "../../contexts/UserContext";
 
 const MainContent = ({ posts, hashtags, children }) => {
     const { userInfo } = useContext(UserContext);
+    
     console.log("AQUIIIIIIIIIIIIIIIIi", userInfo.userId);
     return (
         <Content>
@@ -26,7 +27,7 @@ const MainContent = ({ posts, hashtags, children }) => {
                                 likesCount={0}
                                 imageUrl={post.imageUrl}
                                 postId={post.postId}
-                                isOwner={post.userId === userInfo.userId}
+                                isOwner={post.userId === userInfo.userId }
                                 userId={post.userId}
                             />
                         );

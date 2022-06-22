@@ -44,8 +44,8 @@ function Post({
     const [confirmDelete, SetConfirmDelete] = useState(false);
     const token = localStorage.getItem("linkr-user-token");
     const navigate = useNavigate();
-
-    console.log(postId);
+    
+    console.log(postId, userId);
     function handleLike(like, postId) {
         // const promise = axios.post(`http://heroku-linkr-api.herokuapp.com/like/${postId}`,null
         const promise = axios.post(
@@ -77,7 +77,7 @@ function Post({
     function likedByUser(postId) {
         if (token) {
             // const promise = axios.get(`http://heroku-linkr.herokuapp.com/liked/${postId}`, {
-            const promise = axios.get(`http://localhost:4000/liked/${postId}`, {
+            const promise = axios.get(`http://localhost:5000/liked/${postId}`, {
                 headers: {
                     // Authorization: `Bearer ${token}`
                     Authorization: `Bearer 222`,
