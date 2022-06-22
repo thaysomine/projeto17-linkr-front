@@ -12,9 +12,12 @@ import { TrendingContext } from "../../contexts/TrendingContext";
 function Timeline() {
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [editingChanged, setEditingChanged] = useState(false)
     const { userInfo } = useContext(UserContext);
     const { token } = userInfo;
     const { trending } = useContext(TrendingContext);
+
+    console.log(editingChanged)
 
     function getPosts() {
         const config = {
@@ -35,7 +38,7 @@ function Timeline() {
         });
     }
 
-    useEffect(getPosts, []);
+    useEffect(getPosts, [editingChanged]);
 
     return (
         <>
@@ -70,7 +73,7 @@ function Timeline() {
                                 />
                             );
                         })} */}
-                    <MainContent posts={posts} hashtags={trending}>
+                    <MainContent posts={posts} hashtags={trending} editingChanged = {editingChanged} setEditingChanged={setEditingChanged}>
                         <CreatePost></CreatePost>
                         {loading && <LineWave color="white" />}
                         {posts.length === 0 && !loading && (

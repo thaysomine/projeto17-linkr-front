@@ -27,6 +27,8 @@ import { Link } from "react-router-dom";
 function Post({
     postId,
     isOwner,
+    editingChanged,
+    setEditingChanged, 
     username,
     postContent,
     link,
@@ -44,8 +46,8 @@ function Post({
     const [confirmDelete, SetConfirmDelete] = useState(false);
     const token = localStorage.getItem("linkr-user-token");
     const navigate = useNavigate();
-    
-    console.log(postId, userId);
+
+
     function handleLike(like, postId) {
         // const promise = axios.post(`http://heroku-linkr-api.herokuapp.com/like/${postId}`,null
         const promise = axios.post(
@@ -128,14 +130,11 @@ function Post({
         }, [isLiked]);
     }
 
-    let finishEditing = false;
 
     function performEdit() {
-        if (!editing) {
-            SetEditing(true);
-        } else {
+
             const promise = axios.put(
-                `http://localhost:5000/post/${postId}`,
+                `http://localhost:4000/post/${postId}`,
                 { description: newContent, postId: postId },
                 {
                     headers: {
@@ -144,15 +143,18 @@ function Post({
                     },
                 }
             );
-
+            SetEditing(false);  
             promise.then(() => {
-                SetEditing(false);
-                SetNewContent(postContent);
+                SetNewContent(postContent)
+                setEditingChanged(!editingChanged)
             });
             promise.catch((err) => {
+                SetEditing(false);
+                setEditingChanged(false)
                 alert("Falha ao editar conteúdo");
             });
-        }
+
+        
     }
 
     function handleEditionValue(e) {
@@ -283,7 +285,10 @@ function Post({
                         <ChangeArea visible={isOwner}>
                             <ion-icon
                                 name="create-outline"
-                                onClick={() => performEdit()}
+                                onClick={() => {
+                                    SetEditing(!editing)
+                                    SetNewContent(postContent)
+                                }}
                             />
                             <ion-icon
                                 name="trash-bin-outline"
@@ -301,7 +306,6 @@ function Post({
                                     value={newContent}
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter") {
-                                            SetEditing(false);
                                             performEdit();
                                         }
                                         if (e.key === "Escape") {
