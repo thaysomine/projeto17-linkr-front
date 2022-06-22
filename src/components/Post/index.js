@@ -6,20 +6,28 @@ import ReactTooltip from 'react-tooltip';
 import { ThreeDots } from "react-loader-spinner";
 import api from "../../api";
 import LinkSnippet from "./LinkSnippet"
+import UserContext from "../../contexts/UserContext"
 
 function Post(props) { 
 
 
 
-    const { postId, userId, isOwner, sharedBy, username, postContent, link, likesCount, imageUrl, hashtag } = props
-    console.log(sharedBy)
+    const { key,postId, userId, isOwner, sharedBy, username, postContent, link, likesCount, imageUrl, hashtag } = props
+    console.log(key,username,
+                                postContent,
+                                link,
+                                likesCount,
+                                imageUrl,
+                                postId,
+                                isOwner,
+                                userId,
+                                sharedBy)
 
-
+    const { userInfo } = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(likesCount)
     const [repost, setRepost] = useState(0)
-    const [nameRepost, setnameRepost] = useState('')
     const [editing, SetEditing] = useState(false)
     const [newContent, SetNewContent] = useState(postContent);
     const [ListLikes, SetListLikes] = useState([])
@@ -27,6 +35,7 @@ function Post(props) {
     const [confirmRepost, SetConfirmRepost] = useState(false)
     const token = localStorage.getItem('linkr-user-token')
     const userLocal = localStorage.getItem("linkr-user-id")
+    console.log(userInfo)
     const navigate = useNavigate();
 
 
@@ -200,7 +209,7 @@ function Post(props) {
         }
         )
         promise.catch((err) => {
-            alert("Ops! Algo deu errado, tente novamente mais tarde")
+            
             console.log(err)
         }
         )
@@ -208,10 +217,11 @@ function Post(props) {
 
     function performRepost(postId){
         const body = {
-            userId: parseInt(userLocal),
+            userId: (userLocal>0)?parseInt(userLocal):0,
             postId: postId,
             userPost: userId
         }
+        console.log(body)
 
         const promise = api.post(`repost/${postId}
         `,body
@@ -244,7 +254,7 @@ function Post(props) {
         }
         )
         promise.catch((err) => {
-            alert("Ops! Algo deu errado, tente novamente mais tarde")
+            
             console.log(err)
         }
         )
@@ -359,7 +369,7 @@ function Post(props) {
 
                     <HorizontalStack alignment="space-between">
                         {username}
-                        <ChangeArea visible = {isOwner}>
+                        <ChangeArea visible = {parseInt(userId)===parseInt(userLocal)}>
                             <ion-icon name="create-outline" onClick={() => performEdit()} />
                             <ion-icon name="trash-bin-outline" onClick={() => SetConfirmDelete(true)} />
                         </ChangeArea>
