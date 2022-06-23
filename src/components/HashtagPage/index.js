@@ -11,7 +11,7 @@ const HashtagPage = () => {
     const { hashtag: hashtagName } = useParams();
     const [posts, setPosts] = useState();
     const { userInfo } = useContext(UserContext);
-    const { token } = userInfo
+    const { token } = userInfo;
     const { trending } = useContext(TrendingContext);
 
     useEffect(() => {
@@ -22,6 +22,7 @@ const HashtagPage = () => {
         };
         const request = api.get(`hashtag/${hashtagName}`, config);
         request.then((response) => {
+            console.log(response);
             setPosts(response.data);
         });
         request.catch((err) => {

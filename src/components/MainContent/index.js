@@ -6,7 +6,7 @@ import UserContext from "../../contexts/UserContext";
 
 const MainContent = ({ posts, hashtags, children }) => {
     const { userInfo } = useContext(UserContext);
-    
+
     console.log("AQUIIIIIIIIIIIIIIIIi", userInfo.userId);
     return (
         <Content>
@@ -19,17 +19,18 @@ const MainContent = ({ posts, hashtags, children }) => {
                 ) : (
                     posts?.map((post) => {
                         return (
-                            <Post
-                                key={post.postId}
-                                username={post.username}
-                                postContent={post.description}
-                                link={post.link}
-                                likesCount={0}
-                                imageUrl={post.imageUrl}
-                                postId={post.postId}
-                                isOwner={post.userId === userInfo.userId }
-                                userId={post.userId}
-                            />
+                            <div className="post-wrapper" key={post.postId}>
+                                <Post
+                                    username={post.username}
+                                    postContent={post.description}
+                                    link={post.link}
+                                    likesCount={0}
+                                    imageUrl={post.imageUrl}
+                                    postId={post.postId}
+                                    isOwner={post.userId === userInfo.userId}
+                                    userId={post.userId}
+                                />
+                            </div>
                         );
                     })
                 )}

@@ -15,6 +15,7 @@ import {
     ConfirmButton,
     Input,
 } from "./styles";
+import { AiOutlineComment } from "react-icons/ai";
 import { ProfPic, Image } from "../Navbar/styles";
 import { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router";
@@ -23,6 +24,7 @@ import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
 import LinkSnippet from "./LinkSnippet";
 import { Link } from "react-router-dom";
+import CommentBox from "../CommentBox";
 
 function Post({
     postId,
@@ -32,7 +34,6 @@ function Post({
     link,
     likesCount,
     imageUrl,
-    hashtag,
     userId,
 }) {
     const [isLoading, setIsLoading] = useState(false);
@@ -42,9 +43,10 @@ function Post({
     const [newContent, SetNewContent] = useState(postContent);
     const [ListLikes, SetListLikes] = useState([]);
     const [confirmDelete, SetConfirmDelete] = useState(false);
+    const [comment, setComment] = useState(false);
     const token = localStorage.getItem("linkr-user-token");
     const navigate = useNavigate();
-    
+
     console.log(postId, userId);
     function handleLike(like, postId) {
         // const promise = axios.post(`http://heroku-linkr-api.herokuapp.com/like/${postId}`,null
@@ -275,6 +277,11 @@ function Post({
                         {`${likes} likes`}
                         <ReactTooltip type="info" effect="solid" />
                     </Likes>
+                    <AiOutlineComment
+                        size={30}
+                        onClick={() => setComment(!comment)}
+                        cursor="pointer"
+                    />
                 </VerticalStack>
 
                 <VerticalStack width={100}>
@@ -324,6 +331,7 @@ function Post({
                     </HorizontalStack>
                 </VerticalStack>
             </Body>
+            {!comment ? <></> : <CommentBox postId={postId} />}
         </>
     );
 }
