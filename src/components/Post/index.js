@@ -1,5 +1,6 @@
 import {
     Body,
+    BodyPost,
     VerticalStack,
     HorizontalStack,
     Likes,
@@ -9,6 +10,7 @@ import {
     PostDescription,
     Content,
     ConfirmBox,
+    RepostBox,
     ConfirmCard,
     CheckAnswer,
     GoBackButton,
@@ -18,6 +20,7 @@ import {
 import { ProfPic, Image } from "../Navbar/styles";
 import { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router";
+import UserContext from "../../contexts/UserContext"
 import ReactTooltip from "react-tooltip";
 import { ThreeDots } from "react-loader-spinner";
 import axios from "axios";
@@ -28,6 +31,7 @@ import api from "../../api";
 function Post({
     postId,
     isOwner,
+    sharedBy,
     editingChanged,
     setEditingChanged, 
     username,
@@ -41,48 +45,52 @@ function Post({
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
     const [likes, setLikes] = useState(0);
+    const [repost, setRepost] = useState(0)
     const [editing, SetEditing] = useState(false);
     const [newContent, SetNewContent] = useState(postContent);
     const [ListLikes, SetListLikes] = useState([]);
     const [confirmDelete, SetConfirmDelete] = useState(false);
+    const [confirmRepost, SetConfirmRepost] = useState(false)
     const token = localStorage.getItem("linkr-user-token");
+    const { userInfo } = useContext(UserContext);
     const navigate = useNavigate();
 
+    const userLocal = (userInfo.userId)
 
     function handleLike(like, postId) {
-        // const promise = axios.post(`http://heroku-linkr-api.herokuapp.com/like/${postId}`,null
-        const promise = api.post(`like/${postId}`,
+        const promise = api.post(
+            `like/${postId}`,
             null,
             {
                 headers: {
-                    // Authorization: `Bearer ${token}`
                     Authorization: `Bearer ${token}`,
                 },
             }
         );
 
         promise.then((response) => {
-            if (!like) {
+            if (like===false) {
                 setLikes(likes + 1);
                 console.log("curtiu");
+                setIsLiked(true);
+                
             } else {
                 setLikes(likes - 1);
                 console.log("descurtiu");
+                setIsLiked(false);
             }
         });
         promise.catch((err) => {
             console.log(err);
         });
-        setIsLiked(!like);
+        // setIsLiked(!like);
     }
 
     function likedByUser(postId) {
         if (token) {
-            // const promise = axios.get(`http://heroku-linkr.herokuapp.com/liked/${postId}`, {
             const promise = api.get(`liked/${postId}`, {
                 headers: {
-                    // Authorization: `Bearer ${token}`
-                    Authorization: `Bearer 222`,
+                    Authorization: `Bearer ${token}`,
                 },
             });
 
@@ -114,10 +122,8 @@ function Post({
 
     function Lista(postId) {
         useEffect(() => {
-            // const promise = axios.get(`http://heroku-linkr-api.herokuapp.com/names/${postId}`)
             const promise = api.get(`names/${postId}`, {
                 headers: {
-                    // Authorization: `Bearer ${token}`
                     Authorization: `Bearer ${token}`,
                 },
             });
@@ -132,8 +138,8 @@ function Post({
 
 
     function performEdit() {
-
             const promise = api.put(`post/${postId}`,
+
                 { description: newContent, postId: postId },
                 {
                     headers: {
@@ -161,18 +167,17 @@ function Post({
     }
 
     function performDelete(postId) {
-        // const promise = axios.delete(`http://heroku-linkr-api.herokuapp.com/posts/${postId}`)
         const promise = api.delete(`posts/${postId}`, {
             headers: {
-                // Authorization: `Bearer ${token}`
-                Authorization: `Bearer 222`,
+                Authorization: `Bearer ${token}`,
+                
             },
         });
         promise.then((response) => {
             console.log(response);
             setIsLoading(false);
             SetConfirmDelete(false);
-            navigate("/timeline");
+            window.location.reload();
         });
         promise.catch((err) => {
             alert("Ops! Algo deu errado, tente novamente mais tarde");
@@ -184,17 +189,67 @@ function Post({
 
     function showLikes(postId) {
         {
-            Lista(idPost);
+            Lista(postId);
         }
         {
-            likedByUser(idPost);
+            likedByUser(postId);
         }
         {
-            LikeCount(idPost);
+            LikeCount(postId);
         }
     }
 
-    const idPost = 4;
+    function getRepost(postId){
+        const promise = api.get(`repost/${postId}`
+        , {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        promise.then((response) => {
+            setRepost(parseInt(response.data.rowCount))
+        }
+        )
+        promise.catch((err) => {
+            
+            console.log(err)
+        }
+        )
+    }
+
+    function performRepost(postId){
+        const body = {
+            userId: (userLocal>0)?parseInt(userLocal):0,
+            postId: postId,
+            userPost: userId
+        }
+        console.log(body)
+
+        const promise = api.post(`repost/${postId}
+        `,body
+        ,{
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        })
+        promise.then((response) => {
+            window.location.reload();
+            SetConfirmRepost(false)
+            setIsLoading(false)
+            
+            
+        }
+        )
+        promise.catch((err) => {
+            alert("Ops! Algo deu errado, tente novamente mais tarde")
+            setIsLoading(false)
+            SetConfirmRepost(false)
+            console.log(err)
+        }
+        )
+    }
+
+    const idPost = postId;
 
     function formatHashtags(text) {
         const regex = /((?:^|\s)(?:#[a-z\d-]+))/gi;
@@ -228,22 +283,22 @@ function Post({
                             </>
                         ) : (
                             <>
-                                <p>Deseja mesmo deletar este post?</p>
+                                <p>Are you sure you want to delete this post?</p>
                                 <CheckAnswer>
                                     <GoBackButton
                                         onClick={() => {
                                             SetConfirmDelete(false);
                                         }}
                                     >
-                                        Não
+                                        No, go back
                                     </GoBackButton>
                                     <ConfirmButton
                                         onClick={() => {
                                             setIsLoading(true);
-                                            performDelete(idPost);
+                                            performDelete(postId);
                                         }}
                                     >
-                                        Sim
+                                        Yes, delete it
                                     </ConfirmButton>
                                 </CheckAnswer>
                             </>
@@ -254,7 +309,50 @@ function Post({
                 ""
             )}
 
+            {confirmRepost ?
+                (
+                    <ConfirmBox>
+                        <ConfirmCard>
+
+                            {isLoading ?
+                                <>
+                                    <p>Repostandooo...</p>
+                                    <ThreeDots color="white" height={80} width={80} />
+                                </>
+                                :
+                                <>
+                                    <p>
+                                    Do you want to re-post this link?
+                                    </p>
+                                    <CheckAnswer>
+                                        <GoBackButton onClick={() => { SetConfirmRepost(false) }}> No, cancel</GoBackButton>
+                                        <ConfirmButton onClick={() => {
+                                            setIsLoading(true)
+                                            performRepost(postId)
+                                        }}>
+                                            Yes, share!
+                                        </ConfirmButton>
+                                    </CheckAnswer>
+                                </>
+                            }
+                        </ConfirmCard>
+
+                    </ConfirmBox>
+
+                ) : ("")
+            }
+
             <Body>
+                <>
+                {sharedBy?
+                    (<RepostBox>
+                    <ion-icon name="repeat"/>
+                    <span>Re-posted by <strong>{sharedBy}</strong> </span>
+                    </RepostBox>) 
+                :
+                ('')}
+                </>
+                <BodyPost>
                 <VerticalStack margin={8}>
                     <ProfPic>
                         <Image
@@ -269,19 +367,25 @@ function Post({
                             onClick={() => handleLike(isLiked, idPost)}
                         />
                         {showLikes(idPost)}
-                        {/* {Lista(idPost)}
-                    {likedByUser(idPost)}
-                    {LikeCount(idPost)} */}
 
                         {`${likes} likes`}
                         <ReactTooltip type="info" effect="solid" />
+                    </Likes>
+                    <Likes>
+                        <ion-icon name="chatbubble-ellipses-outline"/>
+                        {`0 comments`}
+                    </Likes>
+                    <Likes>
+                        <ion-icon name="repeat" onClick={() => SetConfirmRepost(true)}/>
+                        {getRepost(postId)}
+                        {`${repost} re-posts`}
                     </Likes>
                 </VerticalStack>
 
                 <VerticalStack width={100}>
                     <HorizontalStack alignment="space-between">
                         <Link to={`/user/${userId}`}> {username} </Link>
-                        <ChangeArea visible={isOwner}>
+                        <ChangeArea visible={parseInt(userId)===parseInt(userLocal)}>
                             <ion-icon
                                 name="create-outline"
                                 onClick={() => {
@@ -326,6 +430,7 @@ function Post({
                         <LinkSnippet url={link} />
                     </HorizontalStack>
                 </VerticalStack>
+                </BodyPost>
             </Body>
         </>
     );

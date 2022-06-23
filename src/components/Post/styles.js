@@ -1,13 +1,23 @@
 import styled from "styled-components";
 
-const Body = styled.article`
-    width: 600px;
-    background-color: #171717;
-    border-radius: 16px;
-    display: flex;
-    padding: 10px;
-    color: white;
+const Body = styled.div`
+display:flex;
+flex-direction: column;
+background-color: #1E1E1E;
+color: #fff;
+border-radius:16px;
+margin-top:20px;
 `;
+
+const BodyPost = styled.article`
+width: 600px;
+background-color: #171717;
+border-radius: 16px;
+display: flex;
+padding: 10px;
+color: white;
+`;
+
 const VerticalStack = styled.div`
     width: ${(props) => props.width}%;
     height: 100%;
@@ -121,7 +131,7 @@ const Content = styled.textarea`
 
 const ConfirmBox = styled.div`
     background-color: rgba(255, 255, 255, 0.6);
-    position: absolute;
+    position: fixed;
     z-index: 2;
     min-width: 100%;
     min-height: 100%;
@@ -130,6 +140,27 @@ const ConfirmBox = styled.div`
     display: flex;
     align-items: 50%;
     justify-content: center;
+`;
+
+const RepostBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 33px;
+    padding: 12px;
+    gap: 6px;
+    
+    
+    span {
+        font-family: 'Lato';
+        font-size: 11px;
+        font-weight: 400;
+    }
+    strong {
+        font-family: 'Lato';
+        font-size: 11px;
+        font-weight: 700;
+    }
 `;
 
 const ConfirmCard = styled.div`
@@ -284,6 +315,7 @@ const Hashtag = styled.span`
 
 export {
     Body,
+    BodyPost,
     VerticalStack,
     HorizontalStack,
     Likes,
@@ -298,6 +330,7 @@ export {
     PostDescription,
     Content,
     ConfirmBox,
+    RepostBox,
     ConfirmCard,
     CheckAnswer,
     GoBackButton,

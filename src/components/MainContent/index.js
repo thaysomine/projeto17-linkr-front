@@ -31,6 +31,7 @@ const MainContent = ({ posts, hashtags, children, editingChanged, setEditingChan
                                 postId={post.postId}
                                 isOwner={post.userId === userInfo.userId }
                                 userId={post.userId}
+                                sharedBy={post.sharedBy}
                             />
                         );
                     })
