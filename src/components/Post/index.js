@@ -32,6 +32,8 @@ function Post({
     postId,
     isOwner,
     sharedBy,
+    editingChanged,
+    setEditingChanged, 
     username,
     postContent,
     link,
@@ -108,7 +110,7 @@ function Post({
     function LikeCount(postId) {
         useEffect(() => {
             // const promise = axios.get(`http://heroku-linkr-api.herokuapp.com/likes/${postId}`)
-            const promise = axios.get(`http://localhost:5000/likes/${postId}`);
+            const promise = api.get(`likes/${postId}`);
             promise.then((response) => {
                 setLikes(parseInt(response.data.count));
             });
@@ -134,14 +136,10 @@ function Post({
         }, [isLiked]);
     }
 
-    let finishEditing = false;
 
     function performEdit() {
-        if (!editing) {
-            SetEditing(true);
-        } else {
-            const promise = api.put(
-                `post/${postId}`,
+            const promise = api.put(`post/${postId}`,
+
                 { description: newContent, postId: postId },
                 {
                     headers: {
@@ -150,15 +148,18 @@ function Post({
                     },
                 }
             );
-
+            SetEditing(false);  
             promise.then(() => {
-                SetEditing(false);
-                SetNewContent(postContent);
+                SetNewContent(postContent)
+                setEditingChanged(!editingChanged)
             });
             promise.catch((err) => {
+                SetEditing(false);
+                setEditingChanged(false)
                 alert("Falha ao editar conteúdo");
             });
-        }
+
+        
     }
 
     function handleEditionValue(e) {
@@ -387,7 +388,10 @@ function Post({
                         <ChangeArea visible={parseInt(userId)===parseInt(userLocal)}>
                             <ion-icon
                                 name="create-outline"
-                                onClick={() => performEdit()}
+                                onClick={() => {
+                                    SetEditing(!editing)
+                                    SetNewContent(postContent)
+                                }}
                             />
                             <ion-icon
                                 name="trash-bin-outline"
@@ -405,7 +409,6 @@ function Post({
                                     value={newContent}
                                     onKeyDown={(e) => {
                                         if (e.key === "Enter") {
-                                            SetEditing(false);
                                             performEdit();
                                         }
                                         if (e.key === "Escape") {

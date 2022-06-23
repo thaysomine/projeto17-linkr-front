@@ -1,5 +1,6 @@
 import axios from "axios"
  import { useEffect, useState } from "react"
+import api from "../../api"
  import { SnippetBody, HorizontalStack, VerticalStack, SnippetImage, SnippetTitle, SnippetDescription, SnippetUrl } from "./styles"
 
  function LinkSnippet(props) {
@@ -7,8 +8,7 @@ import axios from "axios"
      const [snippetInfo, setSnippetInfo] = useState({ title: '', description: '', image: '' })
 
      function getMetaData() {
-         const postUrl = "http://localhost:5000/getMetadata"
-         const promise = axios.post(postUrl, { "url": props.url })
+         const promise = api.post(`getMetadata`, { "url": props.url })
          promise.then((response) => setSnippetInfo(response.data))
      }
 

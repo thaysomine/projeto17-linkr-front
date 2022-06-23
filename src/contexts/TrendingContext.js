@@ -17,7 +17,7 @@ const TrendingProvider = ({ children }) => {
                 Authorization: `Bearer ${token}`,
             },
         };
-        const request = api.get("/trending", config);
+        const request = api.get("trending", config);
         request.then((response) => {
             console.log(response)
             setTrending(response.data);
