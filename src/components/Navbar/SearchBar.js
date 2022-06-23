@@ -6,6 +6,7 @@ import {AiOutlineSearch} from 'react-icons/ai'
 
 import { SearchField, SearchInput, AutocompleteBox, Suggestion, Image, Wrapper } from "./styles";
 import UserContext from "../../contexts/UserContext";
+import api from '../../api';
 
 function SearchBar(props){
 
@@ -26,9 +27,8 @@ function SearchBar(props){
                 Authorization: `Bearer ${token}`
             }
         };
-        const URL = `http://localhost:5000/search/${search}`;
         if (!search.length == 0) {
-            const promise = axios.get(URL, config);                                                       
+            const promise = api.get(`search/${search}`, config);                                                       
             promise.then(response => {
                 console.log(response.data);
                 setUserList(response.data);

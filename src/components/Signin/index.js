@@ -17,7 +17,6 @@ import api from "../../api";
 import UserContext from "../../contexts/UserContext";
 
 function Signin() {
-    const url = "signin";
     const [signinData, setSigninData] = useState({ email: "", password: "" });
     const [loading, setLoading] = useState(false);
     const { setUserInfo } = useContext(UserContext);
@@ -26,7 +25,7 @@ function Signin() {
     function signin(event) {
         setLoading(true);
         event.preventDefault();
-        const promise = api.post(url, {
+        const promise = api.post( "signin", {
             email: signinData.email,
             password: signinData.password,
         });
