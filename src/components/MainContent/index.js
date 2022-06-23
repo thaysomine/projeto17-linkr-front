@@ -29,6 +29,7 @@ const MainContent = ({ posts, hashtags, children }) => {
                                 postId={post.postId}
                                 isOwner={post.userId === userInfo.userId }
                                 userId={post.userId}
+                                sharedBy={post.sharedBy}
                             />
                         );
                     })
