@@ -20,7 +20,7 @@ export default function CreatePost() {
         event.preventDefault();
         setDisabled(true);
 
-        /*axios.post('http://localhost:4000/post', {
+        /*api.post('/post', {
             link,
             description
         }, config)

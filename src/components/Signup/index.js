@@ -16,7 +16,6 @@ import { useNavigate, Link } from "react-router-dom";
 import api from "../../api";
 
 function Signup() {
-    const url = "signup";
     const [signupData, setSignupData] = useState({
         email: "",
         username: "",
@@ -29,7 +28,7 @@ function Signup() {
     function signUp(event) {
         setLoading(true);
         event.preventDefault();
-        const promise = api.post(url, {
+        const promise = api.post("signup", {
             email: signupData.email,
             username: signupData.username,
             password: signupData.password,

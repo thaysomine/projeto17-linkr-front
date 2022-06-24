@@ -4,10 +4,10 @@ import Post from "../Post";
 import { useContext } from "react";
 import UserContext from "../../contexts/UserContext";
 
-const MainContent = ({ posts, hashtags, children }) => {
+const MainContent = ({ posts, hashtags, children, editingChanged, setEditingChanged }) => {
     const { userInfo } = useContext(UserContext);
     
-    console.log("AQUIIIIIIIIIIIIIIIIi", userInfo.userId);
+    //console.log("AQUIIIIIIIIIIIIIIIIi", userInfo.userId);
     return (
         <Content>
             <Feed>
@@ -21,6 +21,8 @@ const MainContent = ({ posts, hashtags, children }) => {
                         return (
                             <Post
                                 key={post.postId}
+                                editingChanged = {editingChanged}
+                                setEditingChanged = {setEditingChanged}
                                 username={post.username}
                                 postContent={post.description}
                                 link={post.link}
@@ -29,6 +31,7 @@ const MainContent = ({ posts, hashtags, children }) => {
                                 postId={post.postId}
                                 isOwner={post.userId === userInfo.userId }
                                 userId={post.userId}
+                                sharedBy={post.sharedBy}
                             />
                         );
                     })

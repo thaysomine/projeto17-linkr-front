@@ -6,6 +6,7 @@ import {AiOutlineSearch} from 'react-icons/ai'
 import api from "../../api";
 import { SearchField, SearchInput, AutocompleteBox, Suggestion, Image, Wrapper } from "./styles";
 import UserContext from "../../contexts/UserContext";
+import api from '../../api';
 
 function SearchBar(props){
 
@@ -25,6 +26,7 @@ function SearchBar(props){
                 Authorization: `Bearer ${token}`
             }
         };
+
         const searchLength = (search.length===0);
         const URL = `/search/${search}`;
         if (!searchLength) {
