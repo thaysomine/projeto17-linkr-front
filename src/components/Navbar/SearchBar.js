@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
 import {AiOutlineSearch} from 'react-icons/ai'
 
+import api from "../../api";
 import { SearchField, SearchInput, AutocompleteBox, Suggestion, Image, Wrapper } from "./styles";
 import UserContext from "../../contexts/UserContext";
 
@@ -27,9 +28,14 @@ function SearchBar(props){
             }
         };
         const URL = `http://localhost:5000/search/${search}`;
-        if (!search.length == 0) {
-            const promise = axios.get(URL, config);                                                       
+        const searchLength = (search.length===0);
+        //const URL = `/search/${search}`;
+        if (!searchLength) {
+            console.log('cheguei no if')
+            const promise = axios.get(URL, config); 
+            console.log(promise);                                                     
             promise.then(response => {
+                console.log('cheguei na resposta');
                 console.log(response.data);
                 setUserList(response.data);
             });
