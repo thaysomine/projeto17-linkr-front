@@ -20,13 +20,16 @@ const HashtagPage = () => {
                 Authorization: `Bearer ${token}`,
             },
         };
+       
         const request = api.get(`hashtag/${hashtagName}`, config);
         request.then((response) => {
+            
             setPosts(response.data);
         });
         request.catch((err) => {
             console.log(err);
         });
+        console.log(Promise)
     }, [hashtagName, token]);
 
     return (

@@ -8,11 +8,10 @@ import UserContext from "../../contexts/UserContext";
 import { LineWave } from "react-loader-spinner";
 import MainContent from "../MainContent";
 import { TrendingContext } from "../../contexts/TrendingContext";
-import useInterval from "use-interval";
+import { ChangeEvent } from "react";
 
 function Timeline() {
     const [posts, setPosts] = useState([]);
-    const [newPosts, setNewPosts] = useState([])
     const [loading, setLoading] = useState(true);
     const [editingChanged, setEditingChanged] = useState(false)
     const { userInfo } = useContext(UserContext);
@@ -24,37 +23,27 @@ function Timeline() {
         const config = {
             headers: { Authorization: `Bearer ${token}` },
             params: { limit: 10 },
-        }
+        };
+        console.log('fui chamado antes da promise')
         const promise = api.get("timeline", config);
+        console.log(promise)
         promise.then((response) => {
-            //console.log('fui chamada')
             setLoading(false);
             setPosts(response.data);
-        })
+            //console.log(response.data);
+            console.log('fui chamado dentro da promise')
+        });
         promise.catch((error) => {
             const confirm = window.confirm(
                 "An error occured while trying to fetch the posts, please refresh the page"
-            )
+            );
             if (confirm) window.location.reload();
-        })
+        });
+
+        console.log(promise)
     }
 
     useEffect(getPosts, [editingChanged]);
-
-    useInterval(() => {
-        const {postCreationDate} = posts[0] 
-        const config = {
-            headers: { Authorization: `Bearer ${token}` },
-            params: { queryDate: postCreationDate },
-        }
-        const promise = api.get("timeline", config)
-        promise.then((response) => {
-            console.log('fui chamada')
-            setNewPosts(response.data)})
-        promise.catch((error) => console.log(error))
-
-      }, 15000)
-    
 
     return (
         <>
@@ -91,9 +80,6 @@ function Timeline() {
                         })} */}
                     <MainContent posts={posts} hashtags={trending} editingChanged = {editingChanged} setEditingChanged={setEditingChanged}>
                         <CreatePost></CreatePost>
-                        {newPosts.length !== 0 && !loading && (
-                            <H1>{`There are ${newPosts.length} new posts`}</H1>
-                        )}
                         {loading && <LineWave color="white" />}
                         {posts.length === 0 && !loading && (
                             <H1>There are no posts yet</H1>
