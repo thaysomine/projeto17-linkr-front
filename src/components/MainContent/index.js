@@ -26,7 +26,7 @@ const MainContent = ({ posts, hashtags, children, editingChanged, setEditingChan
                                 username={post.username}
                                 postContent={post.description}
                                 link={post.link}
-                                likesCount={0}
+                                likesCount={post.likesCount}
                                 imageUrl={post.imageUrl}
                                 postId={post.postId}
                                 isOwner={post.userId === userInfo.userId }

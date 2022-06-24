@@ -44,7 +44,7 @@ function Post({
 }) {
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
-    const [likes, setLikes] = useState(0);
+    const [likes, setLikes] = useState(parseInt(likesCount));
     const [repost, setRepost] = useState(0)
     const [editing, SetEditing] = useState(false);
     const [newContent, SetNewContent] = useState(postContent);
@@ -56,8 +56,7 @@ function Post({
     const navigate = useNavigate();
 
     const userLocal = (userInfo.userId)
-
-    function handleLike(like, postId) {
+    function handleLike(like) {
         const promise = api.post(
             `like/${postId}`,
             null,
@@ -86,7 +85,7 @@ function Post({
         // setIsLiked(!like);
     }
 
-    function likedByUser(postId) {
+    function likedByUser() {
         if (token) {
             const promise = api.get(`liked/${postId}`, {
                 headers: {
@@ -107,20 +106,7 @@ function Post({
         }
     }
 
-    function LikeCount(postId) {
-        useEffect(() => {
-            // const promise = axios.get(`http://heroku-linkr-api.herokuapp.com/likes/${postId}`)
-            const promise = api.get(`likes/${postId}`);
-            promise.then((response) => {
-                setLikes(parseInt(response.data.count));
-            });
-            promise.catch((err) => {
-                console.log(err);
-            });
-        }, [handleLike]);
-    }
-
-    function Lista(postId) {
+    function Lista() {
         useEffect(() => {
             const promise = api.get(`names/${postId}`, {
                 headers: {
@@ -166,7 +152,7 @@ function Post({
         SetNewContent(e.target.value);
     }
 
-    function performDelete(postId) {
+    function performDelete() {
         const promise = api.delete(`posts/${postId}`, {
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -187,19 +173,16 @@ function Post({
         });
     }
 
-    function showLikes(postId) {
+    function showLikes() {
         {
-            Lista(postId);
+            Lista();
         }
         {
-            likedByUser(postId);
-        }
-        {
-            LikeCount(postId);
+            likedByUser();
         }
     }
 
-    function getRepost(postId){
+    function getRepost(){
         const promise = api.get(`repost/${postId}`
         , {
             headers: {
@@ -217,7 +200,7 @@ function Post({
         )
     }
 
-    function performRepost(postId){
+    function performRepost(){
         const body = {
             userId: (userLocal>0)?parseInt(userLocal):0,
             postId: postId,
@@ -249,7 +232,6 @@ function Post({
         )
     }
 
-    const idPost = postId;
 
     function formatHashtags(text) {
         const regex = /((?:^|\s)(?:#[a-z\d-]+))/gi;
@@ -295,7 +277,7 @@ function Post({
                                     <ConfirmButton
                                         onClick={() => {
                                             setIsLoading(true);
-                                            performDelete(postId);
+                                            performDelete();
                                         }}
                                     >
                                         Yes, delete it
@@ -328,7 +310,7 @@ function Post({
                                         <GoBackButton onClick={() => { SetConfirmRepost(false) }}> No, cancel</GoBackButton>
                                         <ConfirmButton onClick={() => {
                                             setIsLoading(true)
-                                            performRepost(postId)
+                                            performRepost()
                                         }}>
                                             Yes, share!
                                         </ConfirmButton>
@@ -364,9 +346,9 @@ function Post({
                         <ion-icon
                             data-tip={ListLikes}
                             name={`heart${isLiked ? "" : "-outline"}`}
-                            onClick={() => handleLike(isLiked, idPost)}
+                            onClick={() => handleLike(isLiked)}
                         />
-                        {showLikes(idPost)}
+                        {showLikes()}
 
                         {`${likes} likes`}
                         <ReactTooltip type="info" effect="solid" />
@@ -377,7 +359,7 @@ function Post({
                     </Likes>
                     <Likes>
                         <ion-icon name="repeat" onClick={() => SetConfirmRepost(true)}/>
-                        {getRepost(postId)}
+                        {getRepost()}
                         {`${repost} re-posts`}
                     </Likes>
                 </VerticalStack>
