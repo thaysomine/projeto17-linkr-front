@@ -21,6 +21,15 @@ const Feed = styled.div`
     flex-direction: column;
     gap: 45px;
     align-items: center;
+    width: 600px;
+
+    .post-wrapper {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+    }
 `;
 
 export { Feed, MainContent };
