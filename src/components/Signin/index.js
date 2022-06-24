@@ -32,10 +32,6 @@ function Signin() {
         promise
             .then((response) => {
                 const { token, userId } = response.data;
-                console.log(token, userId)
-                setUserInfo({
-                    token: token,
-                });
                 localStorage.setItem(
                     "linkr-user-credentials",
                     JSON.stringify({ token: token })

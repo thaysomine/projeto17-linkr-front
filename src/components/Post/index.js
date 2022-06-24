@@ -77,7 +77,9 @@ function Post({
     }
 
     function likedByUser(postId) {
-        if (token) {
+        /*
+        
+                if (token) {
             // const promise = axios.get(`http://heroku-linkr.herokuapp.com/liked/${postId}`, {
             const promise = api.get(`liked/${postId}`, {
                 headers: {
@@ -97,6 +99,8 @@ function Post({
                 console.log(err);
             });
         }
+        
+        */
     }
 
     function LikeCount(postId) {
@@ -184,17 +188,15 @@ function Post({
 
     function showLikes(postId) {
         {
-            Lista(idPost);
+            Lista(postId);
         }
         {
-            likedByUser(idPost);
+            likedByUser(postId);
         }
         {
-            LikeCount(idPost);
+            LikeCount(postId);
         }
     }
-
-    const idPost = 4;
 
     function formatHashtags(text) {
         const regex = /((?:^|\s)(?:#[a-z\d-]+))/gi;
@@ -240,7 +242,7 @@ function Post({
                                     <ConfirmButton
                                         onClick={() => {
                                             setIsLoading(true);
-                                            performDelete(idPost);
+                                            performDelete(postId);
                                         }}
                                     >
                                         Sim
@@ -266,12 +268,12 @@ function Post({
                         <ion-icon
                             data-tip={ListLikes}
                             name={`heart${isLiked ? "" : "-outline"}`}
-                            onClick={() => handleLike(isLiked, idPost)}
+                            onClick={() => handleLike(isLiked, postId)}
                         />
-                        {showLikes(idPost)}
-                        {/* {Lista(idPost)}
-                    {likedByUser(idPost)}
-                    {LikeCount(idPost)} */}
+                        {showLikes(postId)}
+                        {/* {Lista(postId)}
+                    {likedByUser(postId)}
+                    {LikeCount(postId)} */}
 
                         {`${likes} likes`}
                         <ReactTooltip type="info" effect="solid" />
