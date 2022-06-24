@@ -1,9 +1,9 @@
 import {DebounceInput} from 'react-debounce-input';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
 import {AiOutlineSearch} from 'react-icons/ai'
 
+import api from "../../api";
 import { SearchField, SearchInput, AutocompleteBox, Suggestion, Image, Wrapper } from "./styles";
 import UserContext from "../../contexts/UserContext";
 import api from '../../api';
@@ -14,7 +14,6 @@ function SearchBar(props){
     const { token } = userInfo
 
     const {screen} = props;
-    //const token = 'qoasda342wf45iu36eq25iwueoqiwue';
     const navigate = useNavigate();
 
     const [userList, setUserList] = useState([]);
@@ -27,8 +26,12 @@ function SearchBar(props){
                 Authorization: `Bearer ${token}`
             }
         };
-        if (!search.length == 0) {
-            const promise = api.get(`search/${search}`, config);                                                       
+
+        const searchLength = (search.length===0);
+        const URL = `/search/${search}`;
+        if (!searchLength) {
+            const promise = api.get(URL, config); 
+            console.log(promise);                                                     
             promise.then(response => {
                 console.log(response.data);
                 setUserList(response.data);
