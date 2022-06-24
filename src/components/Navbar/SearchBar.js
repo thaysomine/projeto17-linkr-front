@@ -1,5 +1,4 @@
 import {DebounceInput} from 'react-debounce-input';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useState, useEffect } from 'react';
 import {AiOutlineSearch} from 'react-icons/ai'
@@ -14,7 +13,6 @@ function SearchBar(props){
     const { token } = userInfo
 
     const {screen} = props;
-    //const token = 'qoasda342wf45iu36eq25iwueoqiwue';
     const navigate = useNavigate();
 
     const [userList, setUserList] = useState([]);
@@ -27,15 +25,12 @@ function SearchBar(props){
                 Authorization: `Bearer ${token}`
             }
         };
-        const URL = `http://localhost:5000/search/${search}`;
         const searchLength = (search.length===0);
-        //const URL = `/search/${search}`;
+        const URL = `/search/${search}`;
         if (!searchLength) {
-            console.log('cheguei no if')
-            const promise = axios.get(URL, config); 
+            const promise = api.get(URL, config); 
             console.log(promise);                                                     
             promise.then(response => {
-                console.log('cheguei na resposta');
                 console.log(response.data);
                 setUserList(response.data);
             });
