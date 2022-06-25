@@ -22,8 +22,7 @@ function Timeline() {
 
     function getPosts() {
         const config = {
-            headers: { Authorization: `Bearer ${token}` },
-            params: { limit: 10 },
+            headers: { Authorization: `Bearer ${token}` }
         };
         const promise = api.get("timeline", config);
         promise.then((response) => {

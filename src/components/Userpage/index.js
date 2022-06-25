@@ -33,7 +33,7 @@ export default function Userpage() {
                 Authorization: `Bearer ${token}`,
             },
         };
-        const URL = `/user/${id}`;
+        const URL = `user/${id}`;
         const promise = api.get(URL, config);
         promise.then((response) => {
             setPosts(response.data.posts);

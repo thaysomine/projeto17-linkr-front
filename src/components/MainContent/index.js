@@ -17,10 +17,10 @@ const MainContent = ({ posts, hashtags, children, editingChanged, setEditingChan
                         Nenhum item encontrado na busca :/
                     </h1>
                 ) : (
-                    posts?.map((post) => {
+                    posts?.map((post, index) => {
                         return (
                             <Post
-                                key={post.postId}
+                                key={index}
                                 editingChanged = {editingChanged}
                                 setEditingChanged = {setEditingChanged}
                                 username={post.username}

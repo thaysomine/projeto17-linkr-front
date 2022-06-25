@@ -27,7 +27,7 @@ function SearchBar(props){
         };
 
         const searchLength = (search.length===0);
-        const URL = `/search/${search}`;
+        const URL = `search/${search}`;
         if (!searchLength) {
             const promise = api.get(URL, config); 
             console.log(promise);                                                     

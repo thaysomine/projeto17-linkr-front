@@ -44,19 +44,20 @@ function Post({
 }) {
     const [isLoading, setIsLoading] = useState(false);
     const [isLiked, setIsLiked] = useState(false);
-    const [likes, setLikes] = useState(parseInt(likesCount));
+    const [likes, setLikes] = useState(parseInt(likesCount || 0));
     const [repost, setRepost] = useState(0)
     const [editing, SetEditing] = useState(false);
     const [newContent, SetNewContent] = useState(postContent);
     const [ListLikes, SetListLikes] = useState([]);
     const [confirmDelete, SetConfirmDelete] = useState(false);
     const [confirmRepost, SetConfirmRepost] = useState(false)
-    const token = localStorage.getItem("linkr-user-token");
-    const { userInfo } = useContext(UserContext);
-    const navigate = useNavigate();
 
+    const { userInfo } = useContext(UserContext);
+    const {token} = userInfo
+    const navigate = useNavigate();
     const userLocal = (userInfo.userId)
     function handleLike(like) {
+        console.log(postId)
         const promise = api.post(
             `like/${postId}`,
             null,
@@ -65,12 +66,13 @@ function Post({
                     Authorization: `Bearer ${token}`,
                 },
             }
-        );
-
-        promise.then((response) => {
-            if (like===false) {
-                setLikes(likes + 1);
-                console.log("curtiu");
+            );
+            
+           
+            promise.then((response) => {
+                if (like===false) {
+                    setLikes(likes + 1);
+                    console.log("curtiu");
                 setIsLiked(true);
                 
             } else {

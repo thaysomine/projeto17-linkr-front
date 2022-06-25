@@ -21,7 +21,7 @@ export default function Following({followstatus, setIsFollowing, followerId}) {
         console.log(followstatus)
         if(followstatus==='Follow') {
             setIsFollowing(null);
-            const URL = `/follow/${followerId}`;
+            const URL = `follow/${followerId}`;
             console.log(URL)
             const promise = api.post(URL, config);
             promise.then((response) => {
@@ -36,7 +36,7 @@ export default function Following({followstatus, setIsFollowing, followerId}) {
         }
         if(followstatus==='Unfollow') {
             setIsFollowing(null);
-            const URL = `/unfollow/${followerId}`;
+            const URL = `unfollow/${followerId}`;
             const promise = api.delete(URL, config);
             promise.then((response) => {
                 console.log(response);
